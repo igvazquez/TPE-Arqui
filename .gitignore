@@ -5,3 +5,4 @@ proRun.sh
 x64BareBonesImage.img
 x64BareBonesImage.qcow2
 x64BareBonesImage.vmdk
+*.DS_Store
