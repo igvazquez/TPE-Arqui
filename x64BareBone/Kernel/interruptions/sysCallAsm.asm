@@ -88,10 +88,19 @@ _sysWriteLoader:
     ret
 ;
 
-;
+;---------------------------------------------------------------------------------
+;Funcion encargada de acceder a la memoria interna del RTC 
+;---------------------------------------------------------------------------------
+; Entrada:
+;   rbx: recibe el "Time Descriptor", es decir, si quiere los minutos, segundo, etc.
+;.................................................................................
+; Salida: 
+;	rax: retorna el valor solicitado
+;---------------------------------------------------------------------------------
 _sysRTC:
 	mov rax, rbx ;Time Descriptor
     out 70h, al
     in al, 71h
 	ret
 ;
+
