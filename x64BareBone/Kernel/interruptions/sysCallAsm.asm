@@ -3,7 +3,7 @@
 GLOBAL _sysCallHandler
 
 ;Funcion encargada de de realizar la escritura a pantalla
-EXTERN sysWrite
+EXTERN sysWriteHandler
 
 ;No guarda eax ya que es el registro designado para el retorno de datos
 %macro pushState 0
@@ -40,16 +40,29 @@ EXTERN sysWrite
 	pop rbx
 %endmacro
 
+;---------------------------------------------------------------------------------
+;Funcion encargada de manejar las system calls, cuando se realiza una int 80h,
+; se viene a esta funcion y de aca, en base a lo que haya en rax llamar a la
+; system cal correspondiente.
+;---------------------------------------------------------------------------------
+; Entrada:
+;   rax: ID de la system call
+;   rbx, rcx, etc: depende de la system call en cuestion
+;.................................................................................
+; Salida: 
+;	rax: retorna el valor solicitado
+;---------------------------------------------------------------------------------
 _sysCallHandler:
-        pushState
+	
+	pushState
 
-        cmp rax, 4
-        je .Write
-		
-        cmp rax, 1
-        je .RTC
+	cmp rax, sysWriteID
+	je .Write
+	
+	cmp rax, sysRTCID
+	je .RTC
 
-        jmp .end
+	jmp .end
 
     .Write:
         call _sysWriteLoader
@@ -71,6 +84,9 @@ _sysCallHandler:
 ;
 
 ;---------------------------------------------------------------------------------
+; System Write 
+%define sysWriteID 4
+;---------------------------------------------------------------------------------
 ;Funcion encargada de tomar los valores de los registros utilizados 
 ;para  realizar la system call y pasarselos a la funcion.
 ;---------------------------------------------------------------------------------
@@ -84,10 +100,13 @@ _sysWriteLoader:
     
     mov rdi, rbx 
     mov rsi, rcx 
-    call sysWrite
+    call sysWriteHandlers
     ret
 ;
 
+;---------------------------------------------------------------------------------
+; System call RTC
+%define sysRTCID 1
 ;---------------------------------------------------------------------------------
 ;Funcion encargada de acceder a la memoria interna del RTC 
 ;---------------------------------------------------------------------------------
@@ -101,6 +120,26 @@ _sysRTC:
 	mov rax, rbx ;Time Descriptor
     out 70h, al
     in al, 71h
+	call bcdToInt
 	ret
 ;
 
+;---------------------------------------------------------------------------------
+;Funcion auxiliar para convertir el dato BCD que devuelve el RTC a binnario "comun"
+;---------------------------------------------------------------------------------
+bcdToInt:
+	div 16
+
+	mov cl, ah
+
+	mov ah, 0
+
+	mul 10
+
+	mov bl, al
+
+	add bl, cl
+
+	mov al, bl
+
+	ret
