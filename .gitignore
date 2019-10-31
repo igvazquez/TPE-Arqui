@@ -1,0 +1,7 @@
+*.o
+*.bin
+proRun.sh
+*.sys
+x64BareBonesImage.img
+x64BareBonesImage.qcow2
+x64BareBonesImage.vmdk
