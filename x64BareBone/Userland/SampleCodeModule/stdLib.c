@@ -2,7 +2,7 @@
 
 char getCharAsm();
 void write(char* string, unsigned char format);
-
+void setCursorPosAsm(unsigned int row, unsigned int col);
 void putChar(char c){
     char string[2] = {c, 0};
     write(string, 0x07);
@@ -10,7 +10,9 @@ void putChar(char c){
 char getChar(){
     return getCharAsm();
 }
-
+void setCursorPos(int row, int col){
+    setCursorPosAsm(row, col);
+}
 void scanf(char * output, int n){
     char c;
     int counter=0;
@@ -31,7 +33,18 @@ void scanf(char * output, int n){
     putChar('\n');
     output[counter]=0;   
 }
+void putCharf(char c, unsigned char format){
+    char string[2] = {c, 0};
+    write(string,format);
+}
+void printf(char * string, unsigned char format){
+    write(string, format);
+}
+void println(char * string){
+    write(string, 0x07);
+    putChar('\n');
+}
 
-void printf(char * string){
+void print(char * string){
     write(string, 0x07);
 }

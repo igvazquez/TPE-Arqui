@@ -1,6 +1,6 @@
 GLOBAL write
 GLOBAL getCharAsm
-
+GLOBAL setCursorPosAsm
 section .text
 
 ;-----------------------------------------------------------
@@ -65,4 +65,15 @@ getCharAsm:
     int 80h 
 
     ret
+
+setCursorPosAsm:
+	push rbx
+	push rcx
+	mov rax, 7
+	mov rbx, rdi
+	mov rcx, rdx
+	int 80h
+	pop rcx
+	pop rbx
     
+	ret

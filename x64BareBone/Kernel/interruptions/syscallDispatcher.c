@@ -11,6 +11,9 @@ int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx) {
         case 4:
             sysWrite((char*)rsi, rdx);
             break;
+        case 7:
+            setCursorPos(rsi, rdx);
+            break;
     
     }
     return 0;

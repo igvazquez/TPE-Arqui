@@ -12,7 +12,12 @@ int main() {
 	*/
 	char output[20];
 	scanf(output, 20);
-	printf(output);
+
+	print(output);
+	setCursorPos(5, 8);
+	print(output);
+	setCursorPos(0,0);
+	print(output);
 
 	//Test if BSS is properly set up
 	return 0;
