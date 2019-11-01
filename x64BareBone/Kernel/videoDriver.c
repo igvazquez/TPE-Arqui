@@ -88,11 +88,18 @@ void printString(char* word){
 		printChar(*s++);
 }
 
-void printn(char* word, unsigned int lenght){
-	char c;
-	for (int i = 0; i < lenght && (c = *(word + i)) != 0; i++){
-		printChar(*(word+i));
-	}
+void printFormatedString(char* word, unsigned char newColorMode){
+	unsigned char colorModeBackup = colorMode;
+	setColorMode(newColorMode);
+	printString(word);
+	setColorMode(colorModeBackup);
+}
+
+void printFormatedChar(char c, unsigned char newColorMode){
+	unsigned char colorModeBackup = colorMode;
+	setColorMode(newColorMode);
+	printChar(c);
+	setColorMode(colorModeBackup);
 }
 
 void printChar(char c){

@@ -22,8 +22,6 @@ void ncClear();
 
 void printString(char* word);
 
-void printn(char* word, unsigned int lenght);
-
 void printChar(char c);
 
 void setColorMode(unsigned char colorMode);
@@ -31,5 +29,9 @@ void setColorMode(unsigned char colorMode);
 void setCursorPos(unsigned int row, unsigned int col);
 
 void moveCursorPos(int row, int col);
+
+void printFormatedChar(char c, unsigned char newColorMode);
+
+void printFormatedString(char* word, unsigned char newColorMode);
 
 #endif

@@ -3,6 +3,8 @@
 #include <lib.h>
 #include <moduleLoader.h>
 #include <videoDriver.h>
+#include <keyboardDriver.h>
+#include <idtLoader.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -37,14 +39,14 @@ void * initializeKernelBinary()
 {
 	char buffer[10];
 
-	ncPrint("[x64BareBones]");
+	printString("[x64BareBones]");
 	ncNewline();
 
-	ncPrint("CPU Vendor:");
-	ncPrint(cpuVendor(buffer));
+	printString("CPU Vendor:");
+	printString(cpuVendor(buffer));
 	ncNewline();
 
-	ncPrint("[Loading modules]");
+	printString("[Loading modules]");
 	ncNewline();
 	void * moduleAddresses[] = {
 		sampleCodeModuleAddress,
@@ -52,29 +54,29 @@ void * initializeKernelBinary()
 	};
 
 	loadModules(&endOfKernelBinary, moduleAddresses);
-	ncPrint("[Done]");
+	printString("[Done]");
 	ncNewline();
 	ncNewline();
 
-	ncPrint("[Initializing kernel's binary]");
+	printString("[Initializing kernel's binary]");
 	ncNewline();
 
 	clearBSS(&bss, &endOfKernel - &bss);
 
-	ncPrint("  text: 0x");
+	printString("  text: 0x");
 	ncPrintHex((uint64_t)&text);
 	ncNewline();
-	ncPrint("  rodata: 0x");
+	printString("  rodata: 0x");
 	ncPrintHex((uint64_t)&rodata);
 	ncNewline();
-	ncPrint("  data: 0x");
+	printString("  data: 0x");
 	ncPrintHex((uint64_t)&data);
 	ncNewline();
-	ncPrint("  bss: 0x");
+	printString("  bss: 0x");
 	ncPrintHex((uint64_t)&bss);
 	ncNewline();
 
-	ncPrint("[Done]");
+	printString("[Done]");
 	ncNewline();
 	ncNewline();
 	return getStackBase();
@@ -82,23 +84,40 @@ void * initializeKernelBinary()
 
 int main()
 {	
-	ncPrint("[Kernel Main]");
+	load_idt();
+	printString("[Kernel Main]");
 	ncNewline();
-	ncPrint("  Sample code module at 0x");
+	printString("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
-	ncPrint("  Calling the sample code module returned: ");
+	printString("  Calling the sample code module returned: ");
 	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
 	ncNewline();
 	ncNewline();
 
-	ncPrint("  Sample data module at 0x");
+	printString("  Sample data module at 0x");
 	ncPrintHex((uint64_t)sampleDataModuleAddress);
 	ncNewline();
-	ncPrint("  Sample data module contents: ");
-	ncPrint((char*)sampleDataModuleAddress);
+	printString("  Sample data module contents: ");
+	printString((char*)sampleDataModuleAddress);
 	ncNewline();
 
-	ncPrint("[Finished]");
+	printString("[Finished]");
+	//Parece estar funcionando!!
+	for (int i = 0; i < 1000000000; i++){}
+	
+	char c;
+	while (c = getKey())
+	{
+		printChar(c);
+	}
+		
+
+
+	printString("--------------\n");
+	printString("hola");
+
+	
+
 	return 0;
 }

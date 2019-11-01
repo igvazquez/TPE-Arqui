@@ -28,6 +28,8 @@ static int isLetter(int scancode);
 static void processScancode(unsigned char scancode);
 static int scancodeHasAscii(int scancode);
 static char scancodeToAscii(int scancode);
+static void storeInBuffer(char c);
+static char getKeyFromBuffer();
 
 static int shiftActivated = 0;
 static int capsLock = 0;

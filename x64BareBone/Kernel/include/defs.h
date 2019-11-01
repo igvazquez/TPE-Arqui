@@ -21,5 +21,8 @@
 #define ACS_DATA        (ACS_PRESENT | ACS_DSEG | ACS_WRITE)
 #define ACS_STACK       (ACS_PRESENT | ACS_DSEG | ACS_WRITE)
 
+#define STDOUT 0
+#define STDERR 1
+
 
 #endif
