@@ -1,6 +1,4 @@
-/* sampleCodeModule.c */
-
-char * v = (char*)0xB8000 + 79 * 2;
+#include <stdLib.h>
 
 static int var1 = 0;
 static int var2 = 0;
@@ -8,12 +6,18 @@ static int var2 = 0;
 
 int main() {
 	//All the following code may be removed 
-	*v = 'X';
-	*(v+1) = 0x74;
+/*	
+	char c;
+
+	while (c = getChar())
+	{
+		putChar(c);
+	}
+	*/
+	char output[20];
+	scanf(output, 20);
+	printf(output);
 
 	//Test if BSS is properly set up
-	if (var1 == 0 && var2 == 0)
-		return 0xDEADC0DE;
-
-	return 0xDEADBEEF;
+	return 0;
 }

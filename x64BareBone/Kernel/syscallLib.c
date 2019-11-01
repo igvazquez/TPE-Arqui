@@ -2,13 +2,15 @@
 #include <videoDriver.h>
 #include <keyboardDriver.h>
 
-void sysWriteToScreen(char * string, uint8_t row, uint8_t col){
-    if(row>=VIDEO_VER_LEN || row<0 || col>= VIDEO_HOR_LEN || col< 0){
-        return;
-    }
+void sysSetCursor(uint8_t row, uint8_t col){
     setCursorPos(row, col);
-    printString(string);
 }
+void sysWrite(char *string, unsigned char format){
+    if (format<0 || format >LAST_COLOR_MODE)
+        return;
+    printFormatedString(string, format);
+}
+
 char sysGetChar(){
    return getKey(); 
 }

@@ -10,7 +10,7 @@
 #define FIRST_VIDEO_BYTE (char*)0xB8000
 #define LAST_VIDEO_BYTE (char*)(FIRST_VIDEO_BYTE + VIDEO_HOR_LEN * VIDEO_VER_LEN * 2 - 1)
 #define ERROR_COLOR_MODE 0x4
-
+#define LAST_COLOR_MODE 0xFF
 #define IS_IN_BOUNDS(x) ((x) >= FIRST_VIDEO_BYTE && (x) <= LAST_VIDEO_BYTE)
 
 void ncNewline();

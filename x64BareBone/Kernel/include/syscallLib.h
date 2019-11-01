@@ -6,6 +6,6 @@
 #include <videoDriver.h>
 
 char sysGetChar();
-void sysWriteToScreen( char * string, uint8_t row, uint8_t col);
-
+void sysSetCursor(uint8_t row, uint8_t col);
+void sysWrite(char *string, unsigned char format);
 #endif
