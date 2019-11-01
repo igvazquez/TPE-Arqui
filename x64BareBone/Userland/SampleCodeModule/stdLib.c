@@ -17,7 +17,15 @@ void scanf(char * output, int n){
     while((c=getChar())!='\n' && counter<n-1 ){
         if(c){
             putChar(c);
-            output[counter++]=c;
+            if(c == '\b'){
+                if(counter >= 1)
+                    counter--;
+
+            }else if(c == '\t')
+                output[counter++]=' ';
+
+            else
+                output[counter++]=c;
         }
     }
     putChar('\n');
