@@ -107,7 +107,7 @@ int main()
 	for (int i = 0; i < 1000000000; i++){}
 	
 	char c;
-	while (c = getKey())
+	while ((c = getKey()))
 	{
 		printChar(c);
 	}
