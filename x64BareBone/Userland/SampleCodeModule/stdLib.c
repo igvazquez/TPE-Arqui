@@ -1,4 +1,4 @@
-#include <stdLib.h>
+/*#include <stdLib.h>
 
 void putChar(char c){
     char* buf = {c, 0};
@@ -8,3 +8,4 @@ void putChar(char c){
 void printf(char* s){
     write(STDOUT, s);
 }
+*/
