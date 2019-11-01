@@ -142,6 +142,15 @@ _irq05Handler:
 	irqHandlerMaster 5
 
 _syscallHandler:
+
+	mov rsi, rcx
+	mov rcx, rdx
+	mov rdx, rsi
+
+	mov rdi, rax 
+    mov rsi, rbx
+	
+
 	call syscallDispatcher
 	iretq
 
