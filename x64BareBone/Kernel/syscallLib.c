@@ -1,10 +1,16 @@
 #include <syscallLib.h>
+#include <videoDriver.h>
+#include <keyboardDriver.h>
 
-void sysWrite(uint64_t fd, char * string){
-    if(fd == STDOUT)
-        printString(string);
-
-    else if(fd == STDOUT){
-    	printFormatedString(string, ERROR_COLOR_MODE);
+void sysWriteToScreen(char * string, uint8_t row, uint8_t col){
+    if(row>=VIDEO_VER_LEN || row<0 || col>= VIDEO_HOR_LEN || col< 0){
+        return;
     }
+    setCursorPos(row, col);
+    printString(string);
 }
+char sysGetChar(){
+   return getKey(); 
+}
+
+
