@@ -10,7 +10,8 @@ int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx) {
             return getKey();
         case 4:
             sysWrite((char*)rsi, rdx);
-            return 0;
+            break;
     
     }
+    return 0;
 }
