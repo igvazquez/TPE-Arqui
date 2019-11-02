@@ -1,10 +1,18 @@
 #include <syscallLib.h>
+#include <videoDriver.h>
+#include <keyboardDriver.h>
 
-void sysWrite(uint64_t fd, char * string){
-    if(fd == STDOUT)
-        printString(string);
-
-    else if(fd == STDOUT){
-    	printFormatedString(string, ERROR_COLOR_MODE);
-    }
+void sysSetCursor(uint8_t row, uint8_t col){
+    setCursorPos(row, col);
 }
+void sysWrite(char *string, unsigned char format){
+    if (format<0 || format >LAST_COLOR_MODE)
+        return;
+    printFormatedString(string, format);
+}
+
+char sysGetChar(){
+   return getKey(); 
+}
+
+

@@ -82,7 +82,7 @@ static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base){
 }
 
 void printString(char* word){
-	char* s = word;
+	char * s = word;
 
 	while(*s != 0)
 		printChar(*s++);

@@ -103,21 +103,6 @@ int main()
 	ncNewline();
 
 	printString("[Finished]");
-	//Parece estar funcionando!!
-	for (int i = 0; i < 1000000000; i++){}
-	
-	char c;
-	while ((c = getKey()))
-	{
-		printChar(c);
-	}
-		
-
-
-	printString("--------------\n");
-	printString("hola");
-
-	
 
 	return 0;
 }

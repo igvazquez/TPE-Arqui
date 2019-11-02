@@ -1,12 +1,12 @@
 #ifndef _STD_LIB_
 #define _STD_LIB_
 
-#define STDOUT 0
-#define STDERR 1
-
-void printf(char* s);
+char getChar();
 void putChar(char c);
-
-void write(int fd, char* string);
-
+void putCharf(char c, unsigned char format);
+void print(char * string);
+void printf(char * string, unsigned char format);
+void println(char * string);
+void scanf(char * output, int n);
+void setCursorPos(int row, int col);
 #endif

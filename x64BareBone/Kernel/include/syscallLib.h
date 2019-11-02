@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <videoDriver.h>
 
-void sysWrite(uint64_t fd, char * string);
-
+char sysGetChar();
+void sysSetCursor(uint8_t row, uint8_t col);
+void sysWrite(char *string, unsigned char format);
 #endif
