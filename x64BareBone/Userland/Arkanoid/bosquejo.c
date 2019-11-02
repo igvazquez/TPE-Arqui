@@ -68,6 +68,18 @@ void startGame(){
     printBar();
 }
 
+void play(){
+    char c;
+
+    while (c = getChar() != 'x'){
+        if(c == 'a' || c == 'A')
+            moveLeft();
+        if(c == 'd' || c == 'D')
+            moveRight();
+    }
+    
+}
+
 static void printBricks(){
     
     setCursorPos(0,0);
