@@ -9,7 +9,7 @@ OBJECTS_ASM=$(SOURCES_ASM:.asm=.o)
 all: $(MODULE)
 
 $(MODULE): $(SOURCES) $(OBJECTS_ASM)
-	$(GCC) $(GCCFLAGS) -T sampleCodeModule.ld _loader.c  -I ./include $(OBJECTS_ASM) $(SOURCES) -o ../$(MODULE)
+	$(GCC) $(GCCFLAGS) -T sampleCodeModule.ld _loader.c  -I ./include -I ../Arkanoid ../Arkanoid/bosquejo.c $(OBJECTS_ASM) $(SOURCES) -o ../$(MODULE)
 
 %.o : %.asm
 	$(ASM) $(ASMFLAGS) $< -o $@
