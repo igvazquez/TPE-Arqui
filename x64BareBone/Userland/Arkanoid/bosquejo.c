@@ -110,3 +110,10 @@ void printBricksLowerHalf(char row){
        }
     }
 }
+
+void cleanScreen(){
+    setCursorPos(0,0);
+
+    for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
+        putchar(' ');
+}
