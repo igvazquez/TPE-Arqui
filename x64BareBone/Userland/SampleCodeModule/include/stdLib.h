@@ -9,4 +9,6 @@ void printf(char * string, unsigned char format);
 void println(char * string);
 void scanf(char * output, int n);
 void setCursorPos(int row, int col);
+int strlen(char * s);
+int getTicksElapsed();
 #endif

@@ -90,8 +90,16 @@ int main()
 	printString("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
+
+	ncClear();
+
+	int SampleCodeReturnValue = ((EntryPoint)sampleCodeModuleAddress)();
+
+	setColorMode(DEFAULT_COLOR_MODE);
+	ncClear();
+
 	printString("  Calling the sample code module returned: ");
-	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
+	ncPrintHex(SampleCodeReturnValue);
 	ncNewline();
 	ncNewline();
 

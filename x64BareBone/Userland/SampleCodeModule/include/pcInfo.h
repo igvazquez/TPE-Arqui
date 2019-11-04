@@ -1,0 +1,6 @@
+#define SCREEN_WIDTH 80
+#define SCREEN_HEIGHT 25
+
+#define ESC 27
+
+#define TICKS_PER_SECOND 18
