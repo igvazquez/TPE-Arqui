@@ -43,9 +43,13 @@ void ncPrintBase(uint64_t value, uint32_t base){
 
 void ncClear(){
 	int i;
+	v = FIRST_VIDEO_BYTE;
 
-	for (i = 0; i < VIDEO_VER_LEN * VIDEO_HOR_LEN; i++)
+	for (i = 0; i < VIDEO_VER_LEN * VIDEO_HOR_LEN; i++){
 		v[i * 2] = ' ';
+		v[i * 2 + 1] = colorMode;
+	}
+
 	v = FIRST_VIDEO_BYTE;
 }
 

@@ -3,6 +3,9 @@
 char getCharAsm();
 void write(char* string, unsigned char format);
 void setCursorPosAsm(unsigned int row, unsigned int col);
+int getTicksElapsedAsm();
+
+
 void putChar(char c){
     char string[2] = {c, 0};
     write(string, 0x07);
@@ -16,9 +19,10 @@ void setCursorPos(int row, int col){
 void scanf(char * output, int n){
     char c;
     int counter=0;
-    while((c=getChar())!='\n' && counter<n-1 ){
+    while(counter < n-1 && (c=getChar())!='\n'){
         if(c){
-            putChar(c);
+
+            //putChar(c);
             if(c == '\b'){
                 if(counter >= 1)
                     counter--;
@@ -30,7 +34,7 @@ void scanf(char * output, int n){
                 output[counter++]=c;
         }
     }
-    putChar('\n');
+    //putChar('\n');
     output[counter]=0;   
 }
 void putCharf(char c, unsigned char format){
@@ -47,4 +51,17 @@ void println(char * string){
 
 void print(char * string){
     write(string, 0x07);
+}
+
+int strlen(char * s){
+    int rta = 0;
+    while(*s){
+        rta++;
+        s++;
+    }
+    return rta;
+}
+
+int getTicksElapsed(){
+    return getTicksElapsedAsm();
 }

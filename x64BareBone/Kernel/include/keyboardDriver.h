@@ -7,6 +7,7 @@
 #define RSHFT_DOWN 54
 #define RSHFT_UP (RSHFT_DOWN + 128)
 #define CAPSLOCK_DOWN 58
+#define ESC 27
 
 #include <lib.h>
 
