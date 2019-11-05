@@ -33,6 +33,7 @@ static int readUserInput(char * userInput, int n){
     while(counter < n-1 && (c=getChar())!='\n'){
 
         currentTicksElapsed = getTicksElapsed();
+        //NO ES MUCHO 10*TICKS_PER_SECOND ?? CAPAZ SE ESTA TRAYENDO MAL LOS TIMER TICKS?
         if(currentTicksElapsed != lastCursorTick && currentTicksElapsed % 10*TICKS_PER_SECOND == 0){ //Para que el cursor parpadee
             tickCursor();
             lastCursorTick = currentTicksElapsed; //Si no hago esto, el while va mas rapido que los ticks.
