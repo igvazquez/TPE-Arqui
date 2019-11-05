@@ -16,6 +16,7 @@ GLOBAL _irq05Handler
 GLOBAL _syscallHandler
 
 GLOBAL _exception0Handler
+GLOBAL _exception6Handler
 
 EXTERN syscallDispatcher
 EXTERN irqDispatcher
@@ -162,6 +163,10 @@ _syscallHandler:
 _exception0Handler:
 	exceptionHandler 0
 
+;Invalid code Exception
+_exception6Handler:
+	exceptionHandler 6
+	
 haltcpu:
 	cli
 	hlt

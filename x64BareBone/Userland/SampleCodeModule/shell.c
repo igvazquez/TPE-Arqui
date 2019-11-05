@@ -1,14 +1,28 @@
 #include <shell.h>
 
 int cursorTickState = 0;
-
+typedef struct{
+    char * functionName;
+    int (*function)();
+}functionPackage;
 
 static int readUserInput(char * userInput, int n);
-static void processInstruction(char * userInput);
+static void processInstruction(char * userInput, int functionCount, functionPackage functionArray[]);
 static void tickCursor();
 static void turnOffCursor();
+static void loadFunctions(functionPackage functionArray[], int * functionCount);
+static void loadFunction(functionPackage functionArray[], int * functionCount, char * functionName, int (*function)());
+static int triggerException0();
+static int triggerException6();
+int triggerException6Asm();
+static int inforeg();
 
 int startShell(){
+
+    functionPackage functionArray[FUNCTION_NUMBER];
+    int functionCount = 0;
+    loadFunctions(functionArray, &functionCount);
+    
     char userInput[USER_INPUT_MAX_SIZE]; //Le agrego el 0
 
     setCursorPos(SCREEN_HEIGHT - 1, 0);
@@ -16,9 +30,9 @@ int startShell(){
     print("$ ");
 
     while(readUserInput(userInput, USER_INPUT_MAX_SIZE)){
-        processInstruction(userInput);
+        processInstruction(userInput, functionCount, functionArray);
         printf(LINE_MESSAGE, 0x02);
-        print("$ ");
+        print("$> ");
     }
 
     return 0;
@@ -68,8 +82,18 @@ static int readUserInput(char * userInput, int n){
     return 1; 
 }
 
-static void processInstruction( char * userInput){
+static void processInstruction( char * userInput, int functionCount, functionPackage functionArray[]){
+    for (int i = 0; i < functionCount; i++){
+        
+       if(!strcmp(userInput, functionArray[i].functionName)){
+           functionArray[i].function();
+           return;
+       }
+    }
+
+    print("No existe la funcion ");
     println(userInput);
+    
 }
 
 static void tickCursor(){
@@ -85,5 +109,31 @@ static void turnOffCursor(){
     if(cursorTickState)
         putChar('\b');
     cursorTickState = 0;
+}
+
+static void loadFunctions(functionPackage functionArray[], int * functionCount){
+    loadFunction(functionArray, functionCount, "triggerException0", triggerException0);
+    loadFunction(functionArray, functionCount, "triggerException6", triggerException6);
+    loadFunction(functionArray, functionCount, "inforeg", inforeg);
+}
+
+static void loadFunction(functionPackage functionArray[], int * functionCount, char * functionName, int (*function)()){
+    functionArray[*functionCount].functionName = functionName;
+    functionArray[*functionCount].function = function;
+    *functionCount = *functionCount + 1;
+}
+static int inforeg(){
+    getAllRegisters();
+    return 0;
+}
+
+static int triggerException0(){
+    int a = 4/0;
+    return 0;
+}
+static int triggerException6(){
+    print("hola");
+    triggerException6Asm();
+    return 0;
 }
 

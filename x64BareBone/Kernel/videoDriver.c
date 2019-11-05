@@ -110,13 +110,14 @@ void printChar(char c){
 	if(parseSpecialChars(c))
 		return;
 
-	*v = c;
-	*(v + 1) = colorMode;
-	v += 2;
 	if(v > LAST_VIDEO_BYTE){
 		scrollDownOnce();
 		setCursorPos(VIDEO_VER_LEN - 1, 0);
 	}
+
+	*v = c;
+	*(v + 1) = colorMode;
+	v += 2;
 }
 
 void setColorMode(unsigned char newColorMode){
