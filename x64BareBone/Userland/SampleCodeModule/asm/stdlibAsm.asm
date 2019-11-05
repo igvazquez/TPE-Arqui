@@ -1,6 +1,8 @@
 GLOBAL write
 GLOBAL getCharAsm
 GLOBAL setCursorPosAsm
+GLOBAL getTicksElapsedAsm
+
 section .text
 
 ;-----------------------------------------------------------
@@ -51,10 +53,12 @@ section .text
 write:
     push rbx
     push rcx
+
     mov rax, 4
     mov rbx, rdi
     mov rcx, rsi
     int 80h
+
     pop rcx
     pop rbx
     
@@ -69,11 +73,19 @@ getCharAsm:
 setCursorPosAsm:
 	push rbx
 	push rcx
+
 	mov rax, 7
 	mov rbx, rdi
 	mov rcx, rdx
 	int 80h
+
 	pop rcx
 	pop rbx
     
+	ret
+
+getTicksElapsedAsm:
+	mov rax, 0
+	int 80h
+
 	ret

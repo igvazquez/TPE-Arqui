@@ -3,9 +3,12 @@
 #include <videoDriver.h>
 #include <keyboardDriver.h>
 #include <syscallLib.h>
+#include <time.h>
 
 int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx) {
 	switch (rdi){
+        case 0:
+            return ticks_elapsed();
         case 3:
             return getKey();
         case 4:
