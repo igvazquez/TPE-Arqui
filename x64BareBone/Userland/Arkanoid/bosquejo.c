@@ -43,15 +43,23 @@
     static void cleanScreen();
 //End Static Functions Prototypes
 
-char bricks[BRICKS_PER_COLUMN][BRICKS_PER_ROW];
 
 typedef struct{
     char x, y, vx,vy;
 }ball_t;
 
-ball_t ball;
+typedef struct {
+    char bricks[BRICKS_PER_COLUMN][BRICKS_PER_ROW];
+    ball_t ball;
+    char bar_x;
+    char lifes;
+}gameState_t;
 
+
+char bricks[BRICKS_PER_COLUMN][BRICKS_PER_ROW];
+ball_t ball;
 char bar_x;
+char lifes;
 
 void startGame(){
     cleanScreen();
@@ -68,7 +76,7 @@ void startGame(){
     printBar();
 }
 
-void play(){
+gameState_t play(){
     char c;
 
     while(! gameOver()){
@@ -80,11 +88,10 @@ void play(){
         else if(c == 'd' || c == 'D')
             moveRight();
         else if (c == 'x')
-            exitGame();
+            return exitGame();
         
         if(getTicks() % 6 == 0)
             tryMoveBall();
-     
     }
 }
 static void moveLeft(){
@@ -92,6 +99,21 @@ static void moveLeft(){
 
 }
 
+static gameState_t exitGame(){
+    gameState_t gamestate;
+
+    for (int i = 0; i < BRICKS_PER_COLUMN; i++){
+        for (int j = 0; j < BRICKS_PER_ROW; j++){
+            gamestate.bricks[i][j] = bricks[i][j];   
+        }
+    }
+    
+    gamestate.ball = ball;
+    gamestate.bar_x = bar_x;
+    gamestate.lifes = lifes;
+
+    return gamestate;
+}
 
 
 static void printBricks(){
