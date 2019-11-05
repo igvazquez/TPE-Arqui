@@ -10,22 +10,22 @@
     #define SCREEN_WIDTH 80
     #define SCREEN_HEIGHT 25
 
-    #define BAR_Y 23
+    #define BAR_Y 22
     #define BAR_LENGTH 12
 
-    #define BRICK_SYMBOL_H '═'
-    #define BRICK_SYMBOL_UR '╗'
-    #define BRICK_SYMBOL_UL '╔'
-    #define BRICK_SYMBOL_DR '╝'
-    #define BRICK_SYMBOL_DL '╚'
+    #define BRICK_SYMBOL_H 'x'
+    #define BRICK_SYMBOL_UR 'x'
+    #define BRICK_SYMBOL_UL 'x'
+    #define BRICK_SYMBOL_DR 'x'
+    #define BRICK_SYMBOL_DL 'x'
 
-    #define BAR_SYMBOL_H '─'
-    #define BAR_SYMBOL_UR '┐'
-    #define BAR_SYMBOL_UL '┌'
-    #define BAR_SYMBOL_DR '┘'
-    #define BAR_SYMBOL_DL '└'
+    #define BAR_SYMBOL_H 'x'
+    #define BAR_SYMBOL_UR 'x'
+    #define BAR_SYMBOL_UL 'x'
+    #define BAR_SYMBOL_DR 'x'
+    #define BAR_SYMBOL_DL 'x'
 
-    #define BALL_SYMBOL 'Ø'
+    #define BALL_SYMBOL 'x'
 
     #define BRICK_PRESENT 1
     #define BRICK_BROKEN 0
@@ -41,9 +41,14 @@
     static void printBricksUpperHalf(char row);
     static void printBricksLowerHalf(char row);
     static void cleanScreen();
+    static void play();
+    static int gameOver();
+    static void moveLeft();
+    static void moveRight();
+    static void removeBar();
 //End Static Functions Prototypes
 
-char bricks[BRICKS_PER_COLUMN][BRICKS_PER_ROW];
+int bricks[BRICKS_PER_COLUMN][BRICKS_PER_ROW];
 
 typedef struct{
     char x, y, vx,vy;
@@ -59,16 +64,18 @@ void startGame(){
     for (int i = 0; i < BRICKS_PER_COLUMN; i++)
         for (int k = 0; k < BRICKS_PER_ROW; k++)
             bricks[i][k] = BRICK_PRESENT;
-    bar_x = 34;
+    bar_x = 65;
     ball.x = 15;
     ball.y = 15;
     
     printBricks();
     printBall();
     printBar();
+
+    play();
 }
 
-void play(){
+static void play(){
     char c;
 
     while(! gameOver()){
@@ -79,20 +86,37 @@ void play(){
             moveLeft();
         else if(c == 'd' || c == 'D')
             moveRight();
-        else if (c == 'x')
-            exitGame();
+        // else if (c == 'x')
+        //     exitGame();
         
-        if(getTicks() % 6 == 0)
+        if(getTicksElapsed() % 6 == 0)
             tryMoveBall();
-     
     }
 }
-static void moveLeft(){
-    if(bar_x >=)
-
+//ToDo
+static int gameOver(){
+    return 0;
 }
 
+static void tryMoveBall(){
+    
+}
 
+static void moveLeft(){
+    if(bar_x > 0){
+        removeBar();
+        bar_x--;
+        printBar();
+    }
+}
+
+static void moveRight(){
+    if(bar_x + BAR_LENGTH < SCREEN_WIDTH ){
+        removeBar();
+        bar_x++;
+        printBar();
+    }
+}
 
 static void printBricks(){
     
