@@ -71,14 +71,28 @@ void startGame(){
 void play(){
     char c;
 
-    while (c = getChar() != 'x'){
+    while(! gameOver()){
+
+        c = getChar();
+        
         if(c == 'a' || c == 'A')
             moveLeft();
-        if(c == 'd' || c == 'D')
+        else if(c == 'd' || c == 'D')
             moveRight();
+        else if (c == 'x')
+            exitGame();
+        
+        if(getTicks() % 6 == 0)
+            tryMoveBall();
+     
     }
-    
 }
+static void moveLeft(){
+    if(bar_x >=)
+
+}
+
+
 
 static void printBricks(){
     
@@ -105,6 +119,18 @@ static void printBar(){
     putChar(BAR_SYMBOL_DR);
 }
 
+static void removeBar(){
+    setCursorPos(BAR_Y, bar_x);
+
+    for(int i = 0; i < BAR_LENGTH ; i++)
+        putChar(' ');
+
+    setCursorPos(BAR_Y + 1, bar_x);
+
+    for(int i = 0; i < BAR_LENGTH; i++)
+        putChar(' ');
+}
+
 static void printBall(){
     setCursorPos(ball.y,ball.x);
     putChar(BALL_SYMBOL);
@@ -114,7 +140,7 @@ static void removeBall(){
     setCursorPos(ball.y,ball.x);
     putChar(0);
 }
-
+//ToDo
 static void removeBrick(char row, char column){
 
 }
