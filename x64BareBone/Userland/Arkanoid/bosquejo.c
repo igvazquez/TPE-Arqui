@@ -42,7 +42,8 @@
     static uint8_t colors[BRICKS_PER_COLUMN][2] = {
         {NEGRO * 16 + VERDE_C, NEGRO * 16 + VERDE_O}, 
         {NEGRO * 16 + GRIS_C, NEGRO * 16 + GRIS_O}, 
-        {NEGRO * 16 + CELESTE_C, NEGRO * 16 + CELESTE_O} };
+        {NEGRO * 16 + CELESTE_C, NEGRO * 16 + CELESTE_O} 
+    };
     
     typedef struct{
         char x, y, vx,vy;
@@ -62,6 +63,7 @@
     char lives;
     int lastTick, currentTick;
     int speed, aux;
+    
 //END Variables
 
 //Static Functions Prototypes
@@ -230,30 +232,21 @@ static gameState_t exitGame(){
 
 }
 //Video Functions
-
-    static void moveLeft(){
-        if(bar_x > 0){
-            removeBar();
-            bar_x--;
-            printBar();
-        }
+    static void printBall(){
+        setCursorPos(ball.y,ball.x);
+        putCharf(BALL_SYMBOL, NEGRO * 16 + VIOLETA);
     }
 
-    static void moveRight(){
-        if(bar_x + BAR_LENGTH < SCREEN_WIDTH ){
-            removeBar();
-            bar_x++;
-            printBar();
-        }
+    static void removeBall(){
+        setCursorPos(ball.y,ball.x);
+        putChar(' ');
     }
 
-    static void printBricks(){
-        
+    static void cleanScreen(){
         setCursorPos(0,0);
 
-        for (int i = 0; i < BRICKS_PER_COLUMN; i++){
-            printBricksRow(i);
-        }
+        for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
+            putChar(' ');
     }
 
     static void printBar(){
@@ -272,6 +265,22 @@ static gameState_t exitGame(){
         putCharf(BAR_SYMBOL_DL, BAR_COLOR);
     }
 
+    static void moveLeft(){
+        if(bar_x > 0){
+            removeBar();
+            bar_x--;
+            printBar();
+        }
+    }
+
+    static void moveRight(){
+        if(bar_x + BAR_LENGTH < SCREEN_WIDTH ){
+            removeBar();
+            bar_x++;
+            printBar();
+        }
+    }
+
     static void removeBar(){
         setCursorPos(BAR_Y, bar_x);
 
@@ -284,22 +293,12 @@ static gameState_t exitGame(){
             putChar(' ');
     }
 
-    static void printBall(){
-        setCursorPos(ball.y,ball.x);
-        putCharf(BALL_SYMBOL, NEGRO * 16 + VIOLETA);
-    }
+    static void printBricks(){
+        
+        setCursorPos(0,0);
 
-    static void removeBall(){
-        setCursorPos(ball.y,ball.x);
-        putChar(' ');
-    }
-
-    static void removeBrick(int row, int column){
-        bricks[row][column] = BRICK_BROKEN;
-        for (int i = 0; i < BRICKS_HEIGHT; i++){
-            setCursorPos(row * BRICKS_HEIGHT + i, column * BRICKS_WIDTH);
-            for (int k = 0; k < BRICKS_WIDTH; k++)
-                putChar(' ');
+        for (int i = 0; i < BRICKS_PER_COLUMN; i++){
+            printBricksRow(i);
         }
     }
 
@@ -335,11 +334,12 @@ static gameState_t exitGame(){
         }
     }
 
-    static void cleanScreen(){
-        setCursorPos(0,0);
-
-        for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
-            putChar(' ');
+    static void removeBrick(int row, int column){
+        bricks[row][column] = BRICK_BROKEN;
+        for (int i = 0; i < BRICKS_HEIGHT; i++){
+            setCursorPos(row * BRICKS_HEIGHT + i, column * BRICKS_WIDTH);
+            for (int k = 0; k < BRICKS_WIDTH; k++)
+                putChar(' ');
+        }
     }
-
 //End Video Functions
