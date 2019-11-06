@@ -33,6 +33,8 @@
 
     #define BAR_COLOR NEGRO * 16 + ROJO_O
 
+    #define USER_INTERFACE_COLOR NEGRO * 16 + CELESTE_C
+
     #define BRICK_PRESENT 1
     #define BRICK_BROKEN 0
 //End Defines
@@ -84,6 +86,8 @@
     static void tryHorizontalBounce();
     static void tryVerticalBounce();
     static void setUpBall();
+    static void printUserInterface();
+    static void updateLives();
 //End Static Functions Prototypes
 
 void startGame(){
@@ -99,7 +103,8 @@ void startGame(){
     speed = 3;
     aux = 0;
     setUpBall();
-    
+
+    printUserInterface();    
     printBricks();
     printBall();
     printBar();
@@ -160,7 +165,7 @@ gameState_t play(){
             lastTick = currentTick;
             moveBall();
         }
-    }
+    }    
 
     return ans;
 }
@@ -178,6 +183,7 @@ static void moveBall(){
         tryVerticalBounce();
     }else{
         lives--;
+        updateLives();
         setUpBall();
     }
     printBall();
@@ -247,9 +253,25 @@ static gameState_t exitGame(){
         }
     }
 
+    static void printUserInterface(){
+        setCursorPos(0,0);
+        printf("Lives ", USER_INTERFACE_COLOR);
+        putCharf(3, NEGRO * 16 + ROJO_O);
+        printf(": ", USER_INTERFACE_COLOR);
+        putCharf(lives + '0', USER_INTERFACE_COLOR);
+        
+        
+    }
+
+    static void updateLives(){
+        setCursorPos(0, strlen("Lives  : "));
+        putCharf(lives + '0', USER_INTERFACE_COLOR);
+
+    }
+
     static void printBricks(){
         
-        setCursorPos(0,0);
+        setCursorPos(1,0);
 
         for (int i = 0; i < BRICKS_PER_COLUMN; i++){
             printBricksRow(i);
