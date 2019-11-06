@@ -17,4 +17,5 @@ int getTicksElapsed();
 void getAllRegisters();
 int strcmp(char * s1, char * s2);
 void printRegisters();
+void ncPrintBase(uint64_t value, uint32_t base);
 #endif

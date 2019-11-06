@@ -5,6 +5,7 @@ void write(char* string, unsigned char format);
 void setCursorPosAsm(unsigned int row, unsigned int col);
 static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
 int getTicksElapsedAsm();
+uint64_t getRegister(int register);
 
 void ncPrintBin(uint64_t value){
 	ncPrintBase(value, 2);
