@@ -1,7 +1,9 @@
 #include <stdLib.h>
 #include <pcInfo.h>
 #include <stdint.h>
-
+/* TODO:
+** -Fix bounces
+*/
 //Defines
     #define BRICKS_PER_COLUMN 3
     #define BRICKS_PER_ROW SCREEN_WIDTH / BRICKS_WIDTH
@@ -29,11 +31,13 @@
     #define BAR_SYMBOL_DR 'x'
     #define BAR_SYMBOL_DL 'x'
 
+    #define RIGHT_ALIGNMENT 54
+
     #define BALL_SYMBOL 'x'
 
     #define BAR_COLOR NEGRO * 16 + ROJO_O
 
-    #define USER_INTERFACE_COLOR NEGRO * 16 + CELESTE_C
+    #define USER_INTERFACE_COLOR GRIS_C * 16 + CELESTE_C
 
     #define BRICK_PRESENT 1
     #define BRICK_BROKEN 0
@@ -63,7 +67,7 @@
     char bar_x;
     char lives;
     int lastTick, currentTick;
-    int speed, aux;
+    int speed, aux, bricksLeft;
 //END Variables
 
 //Static Functions Prototypes
@@ -88,6 +92,8 @@
     static void setUpBall();
     static void printUserInterface();
     static void updateLives();
+    static void endGame();
+    static void initialScreen();
 //End Static Functions Prototypes
 
 void startGame(){
@@ -102,6 +108,10 @@ void startGame(){
     lives = 3;
     speed = 3;
     aux = 0;
+    bricksLeft = BRICKS_PER_COLUMN * BRICKS_PER_ROW;
+
+    initialScreen();
+
     setUpBall();
 
     printUserInterface();    
@@ -190,27 +200,28 @@ static void moveBall(){
 }
 
 static void tryHorizontalBounce(){
-    if(ball.y < BRICKS_HEIGHT * BRICKS_PER_COLUMN){
-        if (bricks[ball.y / BRICKS_HEIGHT][(ball.x + 1) / BRICKS_WIDTH] == BRICK_PRESENT ){
-            removeBrick(ball.y / BRICKS_HEIGHT, (ball.x + 1) / BRICKS_WIDTH);
+    if (ball.x >= SCREEN_WIDTH - 1 || ball.x <= 0)
+        ball.vx *= INVERT;
+    else if(ball.y < BRICKS_HEIGHT * BRICKS_PER_COLUMN + 1){
+        if (bricks[(ball.y - 1) / BRICKS_HEIGHT][(ball.x + 1) / BRICKS_WIDTH] == BRICK_PRESENT ){
+            removeBrick((ball.y - 1) / BRICKS_HEIGHT, (ball.x + 1) / BRICKS_WIDTH);
             ball.vx *= INVERT;
-        } else if(bricks[ball.y / BRICKS_HEIGHT][(ball.x - 1) / BRICKS_WIDTH] == BRICK_PRESENT ){
-            removeBrick(ball.y / BRICKS_HEIGHT, (ball.x - 1) / BRICKS_WIDTH);
+        } else if(bricks[(ball.y - 1) / BRICKS_HEIGHT][(ball.x - 1) / BRICKS_WIDTH] == BRICK_PRESENT ){
+            removeBrick((ball.y - 1) / BRICKS_HEIGHT, (ball.x - 1) / BRICKS_WIDTH);
             ball.vx *= INVERT;
         }
-    }else if (ball.x >= SCREEN_WIDTH - 1 || ball.x <= 0)
-        ball.vx *= INVERT;
+    }
 }
 
 static void tryVerticalBounce(){
-    if(ball.y == 0){
+    if(ball.y <= 1){
         ball.vy *= INVERT;   
-    }else if( ball.y <= BRICKS_HEIGHT * BRICKS_PER_COLUMN ){
-        if ((ball.y + 1 < BRICKS_HEIGHT * BRICKS_PER_COLUMN) && bricks[(ball.y + 1) / BRICKS_HEIGHT][ball.x / BRICKS_WIDTH] == BRICK_PRESENT ){
-            removeBrick((ball.y + 1) / BRICKS_HEIGHT, ball.x / BRICKS_WIDTH);
+    }else if( ball.y <= BRICKS_HEIGHT * BRICKS_PER_COLUMN + 1){
+        if ((ball.y <= BRICKS_HEIGHT * (BRICKS_PER_COLUMN - 1)) && bricks[(ball.y) / BRICKS_HEIGHT][ball.x / BRICKS_WIDTH] == BRICK_PRESENT ){
+            removeBrick((ball.y) / BRICKS_HEIGHT, ball.x / BRICKS_WIDTH);
             ball.vy *= INVERT;
-        } else if(bricks[(ball.y - 1) / BRICKS_HEIGHT][ball.x / BRICKS_WIDTH] == BRICK_PRESENT ){
-            removeBrick((ball.y - 1) / BRICKS_HEIGHT, ball.x / BRICKS_WIDTH);
+        } else if(bricks[(ball.y - 2) / BRICKS_HEIGHT][ball.x / BRICKS_WIDTH] == BRICK_PRESENT ){
+            removeBrick((ball.y - 2) / BRICKS_HEIGHT, ball.x / BRICKS_WIDTH);
             ball.vy *= INVERT;
         }
     }else if( (ball.y == BAR_Y - 1) && (ball.x >= bar_x) && (ball.x < bar_x + BAR_LENGTH)){
@@ -256,9 +267,16 @@ static gameState_t exitGame(){
     static void printUserInterface(){
         setCursorPos(0,0);
         printf("Lives ", USER_INTERFACE_COLOR);
-        putCharf(3, NEGRO * 16 + ROJO_O);
+        putCharf(3, GRIS_C * 16 + ROJO_O);
         printf(": ", USER_INTERFACE_COLOR);
         putCharf(lives + '0', USER_INTERFACE_COLOR);
+        for (int i = 0; i < RIGHT_ALIGNMENT; i++)
+        {
+            putCharf(' ', USER_INTERFACE_COLOR);
+        }
+        
+        printf("Bricks left: ", USER_INTERFACE_COLOR);
+        //putCharf()
         
         
     }
@@ -266,6 +284,9 @@ static gameState_t exitGame(){
     static void updateLives(){
         setCursorPos(0, strlen("Lives  : "));
         putCharf(lives + '0', USER_INTERFACE_COLOR);
+    }
+
+    static void updateBricksLeft(){
 
     }
 
@@ -318,8 +339,10 @@ static gameState_t exitGame(){
 
     static void removeBrick(int row, int column){
         bricks[row][column] = BRICK_BROKEN;
+        bricksLeft--;
+        updateBricksLeft();
         for (int i = 0; i < BRICKS_HEIGHT; i++){
-            setCursorPos(row * BRICKS_HEIGHT + i, column * BRICKS_WIDTH);
+            setCursorPos(row * BRICKS_HEIGHT + i + 1, column * BRICKS_WIDTH);
             for (int k = 0; k < BRICKS_WIDTH; k++)
                 putChar(' ');
         }
@@ -364,4 +387,25 @@ static gameState_t exitGame(){
             putChar(' ');
     }
 
+    static void endGame(){
+        //cleanScreen();
+        setCursorPos(SCREEN_HEIGHT/2,SCREEN_HEIGHT/3);
+        printf("Perdiste :p", BLANCO * 16 + ROJO_O);
+    }
+
+    static void initialScreen(){
+        cleanScreen();
+        setCursorPos(SCREEN_HEIGHT/2,SCREEN_WIDTH/2 - 10);
+        printf("Press D to start:", BLANCO * 16 + VERDE_C);
+        char c;
+
+        while ( ((c = getChar()) != 'd') && c != 'D');
+        setCursorPos(SCREEN_HEIGHT/2,SCREEN_WIDTH/2 - 10);    
+        int len = strlen("Press D to start:");
+        for (int i = 0; i < len; i++)
+        {
+            putChar(' ');
+        }
+        
+    }
 //End Video Functions
