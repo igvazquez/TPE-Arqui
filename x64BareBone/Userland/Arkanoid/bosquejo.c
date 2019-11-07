@@ -107,7 +107,7 @@ void startGame(){
 
     bar_x = 40;  
     lives = 3;
-    speed = 3;
+    speed = 9;
     aux = 0;
     bricksLeft = BRICKS_PER_COLUMN * BRICKS_PER_ROW;
 
