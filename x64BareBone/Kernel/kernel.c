@@ -2,7 +2,7 @@
 #include <string.h>
 #include <lib.h>
 #include <moduleLoader.h>
-#include <videoDriver.h>
+#include <screenDriver.h>
 #include <keyboardDriver.h>
 #include <idtLoader.h>
 
@@ -38,7 +38,7 @@ void * getStackBase()
 void * initializeKernelBinary()
 {
 	char buffer[10];
-
+	setCursorPos(0,0);
 	printString("[x64BareBones]");
 	ncNewline();
 
@@ -85,32 +85,37 @@ void * initializeKernelBinary()
 int main()
 {	
 	load_idt();
+	init_VM_Driver();
+
 	printString("[Kernel Main]");
 	ncNewline();
 	printString("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
 
-	ncClear();
+	//ncClear();
+	setCursorPos(0, 48);
+	printChar('c');
 
-	int SampleCodeReturnValue = ((EntryPoint)sampleCodeModuleAddress)();
 
-	setColorMode(DEFAULT_COLOR_MODE);
-	ncClear();
+	//int SampleCodeReturnValue = ((EntryPoint)sampleCodeModuleAddress)();
 
-	printString("  Calling the sample code module returned: ");
-	ncPrintHex(SampleCodeReturnValue);
-	ncNewline();
-	ncNewline();
+	//setColorMode(DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR);
+	//ncClear();
 
-	printString("  Sample data module at 0x");
-	ncPrintHex((uint64_t)sampleDataModuleAddress);
-	ncNewline();
-	printString("  Sample data module contents: ");
-	printString((char*)sampleDataModuleAddress);
-	ncNewline();
+	// printString("  Calling the sample code module returned: ");
+	// //ncPrintHex(SampleCodeReturnValue);
+	// ncNewline();
+	// ncNewline();
 
-	printString("[Finished]");
+	// printString("  Sample data module at 0x");
+	// ncPrintHex((uint64_t)sampleDataModuleAddress);
+	// ncNewline();
+	// printString("  Sample data module contents: ");
+	// printString((char*)sampleDataModuleAddress);
+	// ncNewline();
+
+	// printString("[Finished]");
 
 	return 0;
 }

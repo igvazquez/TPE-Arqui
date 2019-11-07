@@ -2,36 +2,18 @@
 #define VIDEO_DRV_H
 
 #include <stdint.h>
+#include <font.h>
 
-// Defines referentes a FIRST_VIDEO_BYTE
-#define DEFAULT_COLOR_MODE 0x07
-#define VIDEO_HOR_LEN 80
-#define VIDEO_VER_LEN 25
-#define FIRST_VIDEO_BYTE (char*)0xB8000
-#define LAST_VIDEO_BYTE (char*)(FIRST_VIDEO_BYTE + VIDEO_HOR_LEN * VIDEO_VER_LEN * 2 - 1)
-#define ERROR_COLOR_MODE 0x4
-#define LAST_COLOR_MODE 0xFF
-#define IS_IN_BOUNDS(x) ((x) >= FIRST_VIDEO_BYTE && (x) <= LAST_VIDEO_BYTE)
+void init_VM_Driver();
 
-void ncNewline();
-void ncPrintDec(uint64_t value);
-void ncPrintHex(uint64_t value);
-void ncPrintBin(uint64_t value);
-void ncPrintBase(uint64_t value, uint32_t base);
-void ncClear();
+void drawPixel(unsigned int x, unsigned int y, int color);
 
-void printString(char* word);
+void copyPixel(unsigned int xSource, unsigned int ySource, unsigned int xDest, unsigned int yDest);
 
-void printChar(char c);
+void drawChar(int x, int y, char character, int fontColor, int backgroundColor);
 
-void setColorMode(unsigned char colorMode);
+int getScreenWidth();
 
-void setCursorPos(unsigned int row, unsigned int col);
-
-void moveCursorPos(int row, int col);
-
-void printFormatedChar(char c, unsigned char newColorMode);
-
-void printFormatedString(char* word, unsigned char newColorMode);
+int getScreenHeight();
 
 #endif

@@ -26,12 +26,12 @@ int startShell(){
     char userInput[USER_INPUT_MAX_SIZE]; //Le agrego el 0
 
     setCursorPos(SCREEN_HEIGHT - 1, 0);
-    printf(LINE_MESSAGE, 0x02);
+    printf(LINE_MESSAGE, DEFAULT_BACKGROUND_COLOR, 0x222222);
     print("$ ");
 
     while(readUserInput(userInput, USER_INPUT_MAX_SIZE)){
         processInstruction(userInput, functionCount, functionArray);
-        printf(LINE_MESSAGE, 0x02);
+        printf(LINE_MESSAGE, DEFAULT_BACKGROUND_COLOR, 0x222222);
         print("$> ");
     }
 
@@ -100,7 +100,7 @@ static void tickCursor(){
     if(cursorTickState){
         putChar('\b');
     } else {
-        putCharf(' ', CURSOR_COLOR);
+        putCharf(' ', CURSOR_COLOR, DEFAULT_FONT_COLOR);
     }
     cursorTickState = !cursorTickState;
 }

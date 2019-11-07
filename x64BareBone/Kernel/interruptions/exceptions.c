@@ -1,4 +1,5 @@
-#include <videoDriver.h>
+#include <screenDriver.h>
+#include <lib.h>
 
 #define ZERO_EXCEPTION_ID 0
 #define INVALID_UPCODE_ID 6
@@ -20,6 +21,7 @@ void exceptionDispatcher(int exception) {
 static void zero_division() {
 	printString("ERROR 0: DIVISION POR 0\n");
 	printRegisters();
+	//initializeKernelBinary();
 	while(1);
 }
 static void invalid_upcode(){

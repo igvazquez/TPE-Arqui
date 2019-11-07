@@ -5,6 +5,8 @@ GLOBAL getTicksElapsedAsm
 GLOBAL triggerException6Asm
 GLOBAL getAllRegisters
 GLOBAL getRegister
+GLOBAL getScreenWidth
+GLOBAL getScreenHeight
 
 section .text
 
@@ -93,14 +95,25 @@ getTicksElapsedAsm:
 
 	ret
 
+
+getScreenWidth:
+    mov rax, 1
+    int 80h
+
+    ret
+getScreenHeight:
+    mov rax, 2
+    int 80h
+
+    ret
+triggerException6Asm:
+	int 300h
+	ret
+
 getAllRegisters:
 	mov rax, 5
 	int 80h
 
-	ret
-
-triggerException6Asm:
-	int 300h
 	ret
 
 getRegister:

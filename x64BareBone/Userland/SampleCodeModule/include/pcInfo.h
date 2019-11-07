@@ -1,6 +1,10 @@
-#define SCREEN_WIDTH 80
-#define SCREEN_HEIGHT 25
+int getScreenWidth();
+int getScreenHeight();
+
+#define SCREEN_WIDTH (getScreenWidth())
+#define SCREEN_HEIGHT (getScreenHeight())
 
 #define ESC 27
 
 #define TICKS_PER_SECOND 18
+

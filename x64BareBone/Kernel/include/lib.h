@@ -2,7 +2,7 @@
 #define LIB_H
 
 #include <stdint.h>
-#include <videoDriver.h>
+#include <screenDriver.h>
 
 enum registers {RAX=0, RBX, RCX, RDX, RBP, RDI, RSI, R8, R9, R10, R11, R12, R13, R14, R15, RIP};
 

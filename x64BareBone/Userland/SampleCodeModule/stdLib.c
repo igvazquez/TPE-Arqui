@@ -1,7 +1,9 @@
 #include <stdLib.h>
+
 static char buffer[64] = { '0' };
+
 char getCharAsm();
-void write(char* string, unsigned char format);
+void write(char* string, unsigned int backgroundColor, unsigned int fontColor);
 void setCursorPosAsm(unsigned int row, unsigned int col);
 static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
 int getTicksElapsedAsm();
@@ -48,7 +50,7 @@ static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base){
 }
 void putChar(char c){
     char string[2] = {c, 0};
-    write(string, 0x07);
+    write(string, DEFAULT_BACKGROUND_COLOR, DEFAULT_FONT_COLOR);
 }
 char getChar(){
     return getCharAsm();
@@ -77,20 +79,20 @@ void scanf(char * output, int n){
     //putChar('\n');
     output[counter]=0;   
 }
-void putCharf(char c, unsigned char format){
+void putCharf(char c, unsigned int backgroundColor, unsigned int fontColor){
     char string[2] = {c, 0};
-    write(string,format);
+    write(string,backgroundColor, fontColor);
 }
-void printf(char * string, unsigned char format){
-    write(string, format);
+void printf(char * string, unsigned int backgroundColor, unsigned int fontColor){
+    write(string, backgroundColor, fontColor);
 }
 void println(char * string){
-    write(string, 0x07);
+    write(string, DEFAULT_BACKGROUND_COLOR, DEFAULT_FONT_COLOR);
     putChar('\n');
 }
 
 void print(char * string){
-    write(string, 0x07);
+    write(string, DEFAULT_BACKGROUND_COLOR, DEFAULT_FONT_COLOR);
 }
 
 int strlen(char * s){

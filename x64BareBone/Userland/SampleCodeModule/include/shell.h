@@ -4,7 +4,7 @@
 #define LINE_MESSAGE "Fleshy-Shell"
 #define USER_INPUT_MAX_SIZE (SCREEN_WIDTH - strlen(LINE_MESSAGE) - 2)
 #define END_SHELL_KEY ESC
-#define CURSOR_COLOR 0x20
+#define CURSOR_COLOR 0x222222
 
 #define FUNCTION_NUMBER 20
 
