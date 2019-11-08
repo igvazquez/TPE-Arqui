@@ -7,6 +7,7 @@ GLOBAL getAllRegisters
 GLOBAL getRegister
 GLOBAL getScreenWidth
 GLOBAL getScreenHeight
+GLOBAL drawPixelSys
 
 section .text
 
@@ -116,6 +117,14 @@ getAllRegisters:
 	int 80h
 
 	ret
+
+drawPixelSys:
+    mov rax, 6
+    mov rbx, rdi
+    mov rcx, rsi
+    int 80h
+
+    ret
 
 getRegister:
     push rbp
