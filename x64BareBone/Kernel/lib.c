@@ -1,7 +1,7 @@
-#include <stdint.h>
+//lib.c
+#include <lib.h>
 
-void * memset(void * destination, int32_t c, uint64_t length)
-{
+void * memset(void * destination, int32_t c, uint64_t length){
 	uint8_t chr = (uint8_t)c;
 	char * dst = (char*)destination;
 
@@ -11,8 +11,7 @@ void * memset(void * destination, int32_t c, uint64_t length)
 	return destination;
 }
 
-void * memcpy(void * destination, const void * source, uint64_t length)
-{
+void * memcpy(void * destination, const void * source, uint64_t length){
 	/*
 	* memcpy does not support overlapping buffers, so always do it
 	* forwards. (Don't change this without adjusting memmove.)
@@ -47,4 +46,71 @@ void * memcpy(void * destination, const void * source, uint64_t length)
 	}
 
 	return destination;
+}
+
+void printRegisters(){
+	
+		printString("Registro RAX: ");
+		ncPrintBin(getRegister(RAX));
+		printChar('\n');
+
+		printString("Registro RBX: ");
+		ncPrintBin(getRegister(RBX));
+		printChar('\n');
+
+		printString("Registro RCX: ");
+		ncPrintBin(getRegister(RCX));
+		printChar('\n');
+
+		printString("Registro RDX: ");
+		ncPrintBin(getRegister(RDX));
+		printChar('\n');
+
+		printString("Registro RBP: ");
+		ncPrintBin(getRegister(RBP));
+		printChar('\n');
+
+		printString("Registro RDI: ");
+		ncPrintBin(getRegister(RDI));
+		printChar('\n');
+
+		printString("Registro RSI: ");
+		ncPrintBin(getRegister(RSI));
+		printChar('\n');
+
+		printString("Registro R8: ");
+		ncPrintBin(getRegister(R8));
+		printChar('\n');
+
+		printString("Registro R9: ");
+		ncPrintBin(getRegister(R9));
+		printChar('\n');
+
+		printString("Registro R10: ");
+		ncPrintBin(getRegister(R10));
+		printChar('\n');
+
+		printString("Registro R11: ");
+		ncPrintBin(getRegister(R11));
+		printChar('\n');
+
+		printString("Registro R12: ");
+		ncPrintBin(getRegister(R12));
+		printChar('\n');
+
+		printString("Registro R13: ");
+		ncPrintBin(getRegister(R13));
+		printChar('\n');
+
+		printString("Registro R14: ");
+		ncPrintBin(getRegister(R14));
+		printChar('\n');
+
+		printString("Registro R15: ");
+		ncPrintBin(getRegister(R15));
+		printChar('\n');
+
+		// printString("Registro RPI: ");
+		// ncPrintBin(getRegister(RIP));
+		// printChar('\n');
 }

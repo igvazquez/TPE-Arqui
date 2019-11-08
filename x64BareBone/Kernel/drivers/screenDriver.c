@@ -1,5 +1,4 @@
 //screenDriver.c
-
 #include <screenDriver.h>
 
 #define LAST_COLOR_MODE 0xFFFFFF //Color maximo
@@ -160,8 +159,8 @@ void printFormatedChar(char c, unsigned int newBackgroundColor, unsigned int new
 
     static void scrollDownOnce(){
         
-        for (int y = 0; y < screenHeight - CHAR_HEIGHT; y++){
-            for (int x = 0; x < screenWidth; x++){
+        for (int y = 0; y < (screenHeight - 1) * CHAR_HEIGHT; y++){
+            for (int x = 0; x < screenWidth * CHAR_WIDTH; x++){
                 copyPixel(x, y + CHAR_HEIGHT, x, y);
             }
         }
