@@ -2,7 +2,7 @@
 #include <string.h>
 #include <lib.h>
 #include <moduleLoader.h>
-#include <naiveConsole.h>
+#include <screenDriver.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -33,72 +33,72 @@ void * getStackBase()
 	);
 }
 
-void * initializeKernelBinary()
-{
+void * initializeKernelBinary(){
 	char buffer[10];
 
-	ncPrint("[x64BareBones]");
-	ncNewline();
+	printString("[x64BareBones]");
+	newLine();
 
-	ncPrint("CPU Vendor:");
-	ncPrint(cpuVendor(buffer));
-	ncNewline();
+	printString("CPU Vendor:");
+	printString(cpuVendor(buffer));
+	newLine();
 
-	ncPrint("[Loading modules]");
-	ncNewline();
+	printString("[Loading modules]");
+	newLine();
 	void * moduleAddresses[] = {
 		sampleCodeModuleAddress,
 		sampleDataModuleAddress
 	};
 
 	loadModules(&endOfKernelBinary, moduleAddresses);
-	ncPrint("[Done]");
-	ncNewline();
-	ncNewline();
+	printString("[Done]");
+	newLine();
+	newLine();
 
-	ncPrint("[Initializing kernel's binary]");
-	ncNewline();
+	printString("[Initializing kernel's binary]");
+	newLine();
 
 	clearBSS(&bss, &endOfKernel - &bss);
 
-	ncPrint("  text: 0x");
+	printString("  text: 0x");
 	ncPrintHex((uint64_t)&text);
-	ncNewline();
-	ncPrint("  rodata: 0x");
+	newLine();
+	printString("  rodata: 0x");
 	ncPrintHex((uint64_t)&rodata);
-	ncNewline();
-	ncPrint("  data: 0x");
+	newLine();
+	printString("  data: 0x");
 	ncPrintHex((uint64_t)&data);
-	ncNewline();
-	ncPrint("  bss: 0x");
+	newLine();
+	printString("  bss: 0x");
 	ncPrintHex((uint64_t)&bss);
-	ncNewline();
+	newLine();
 
-	ncPrint("[Done]");
-	ncNewline();
-	ncNewline();
+	printString("[Done]");
+	newLine();
+	newLine();
 	return getStackBase();
 }
 
 int main()
 {	
-	ncPrint("[Kernel Main]");
-	ncNewline();
-	ncPrint("  Sample code module at 0x");
+	initializeScreenDriver();
+	printString("[Kernel Main]");
+	newLine();
+	printString("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
-	ncNewline();
-	ncPrint("  Calling the sample code module returned: ");
+	newLine();
+	printString("  Calling the sample code module returned: ");
 	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
-	ncNewline();
-	ncNewline();
+	newLine();
+	newLine();
 
-	ncPrint("  Sample data module at 0x");
+	printString("  Sample data module at 0x");
 	ncPrintHex((uint64_t)sampleDataModuleAddress);
-	ncNewline();
-	ncPrint("  Sample data module contents: ");
-	ncPrint((char*)sampleDataModuleAddress);
-	ncNewline();
+	newLine();
+	printString("  Sample data module contents: ");
+	printString((char*)sampleDataModuleAddress);
+	newLine();
 
-	ncPrint("[Finished]");
+	printString("[Finished]");
 	return 0;
 }
