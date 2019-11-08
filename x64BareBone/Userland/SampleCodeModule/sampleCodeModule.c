@@ -1,5 +1,6 @@
 #include <stdLib.h>
 #include <shell.h>
+#include <arkanoid.h>
 
 int main() {
 	//All the following code may be removed 
@@ -11,6 +12,6 @@ int main() {
 		putChar(c);
 	}
 	*/
-	return startShell();
-	//Test if BSS is properly set up
+	startArkanoid();
+	return 1;
 }

@@ -22,4 +22,5 @@ void getAllRegisters();
 int strcmp(char * s1, char * s2);
 void printRegisters();
 void ncPrintBase(uint64_t value, uint32_t base);
+void drawPixelSys(unsigned int x, unsigned int y, int color);
 #endif
