@@ -95,17 +95,18 @@ getTicksElapsedAsm:
 
 	ret
 
-
 getScreenWidth:
     mov rax, 1
     int 80h
 
     ret
+
 getScreenHeight:
     mov rax, 2
     int 80h
 
     ret
+
 triggerException6Asm:
 	int 300h
 	ret

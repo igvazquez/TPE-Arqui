@@ -38,6 +38,7 @@ void * getStackBase()
 void * initializeKernelBinary()
 {
 	char buffer[10];
+	init_VM_Driver();
 	setCursorPos(0,0);
 	printString("[x64BareBones]");
 	ncNewline();
@@ -93,12 +94,9 @@ int main()
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
 
-	//ncClear();
-	setCursorPos(0, 48);
-	printChar('c');
+	ncClear();
 
-
-	//int SampleCodeReturnValue = ((EntryPoint)sampleCodeModuleAddress)();
+	int SampleCodeReturnValue = ((EntryPoint)sampleCodeModuleAddress)();
 
 	//setColorMode(DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR);
 	//ncClear();
@@ -115,7 +113,7 @@ int main()
 	// printString((char*)sampleDataModuleAddress);
 	// ncNewline();
 
-	// printString("[Finished]");
+	printString("[Finished]");
 
 	return 0;
 }

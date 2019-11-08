@@ -17,6 +17,7 @@ static int triggerException6();
 int triggerException6Asm();
 static int inforeg();
 
+
 int startShell(){
 
     functionPackage functionArray[FUNCTION_NUMBER];
@@ -25,13 +26,14 @@ int startShell(){
     
     char userInput[USER_INPUT_MAX_SIZE]; //Le agrego el 0
 
-    setCursorPos(SCREEN_HEIGHT - 1, 0);
-    printf(LINE_MESSAGE, DEFAULT_BACKGROUND_COLOR, 0x222222);
-    print("$ ");
+    setCursorPos(getScreenHeight() - 1, 0);
+    printf(LINE_MESSAGE, 0x000000, 0x007F00);
+    print("$> ");
 
     while(readUserInput(userInput, USER_INPUT_MAX_SIZE)){
-        processInstruction(userInput, functionCount, functionArray);
-        printf(LINE_MESSAGE, DEFAULT_BACKGROUND_COLOR, 0x222222);
+        //print("hola");
+        //processInstruction(userInput, functionCount, functionArray);
+        printf(LINE_MESSAGE, 0x000000, 0x007F00);
         print("$> ");
     }
 
@@ -47,15 +49,16 @@ static int readUserInput(char * userInput, int n){
     while(counter < n-1 && (c=getChar())!='\n'){
 
         currentTicksElapsed = getTicksElapsed();
+
         //NO ES MUCHO 10*TICKS_PER_SECOND ?? CAPAZ SE ESTA TRAYENDO MAL LOS TIMER TICKS?
-        if(currentTicksElapsed != lastCursorTick && currentTicksElapsed % 10*TICKS_PER_SECOND == 0){ //Para que el cursor parpadee
-            tickCursor();
-            lastCursorTick = currentTicksElapsed; //Si no hago esto, el while va mas rapido que los ticks.
-        }
+        // if(currentTicksElapsed != lastCursorTick && currentTicksElapsed % 10*TICKS_PER_SECOND == 0){ //Para que el cursor parpadee
+        //     tickCursor();
+        //     lastCursorTick = currentTicksElapsed; //Si no hago esto, el while va mas rapido que los ticks.
+        // }
 
         if(c){
 
-            turnOffCursor();
+            //turnOffCursor();
 
             if(c == END_SHELL_KEY) //Cortar ejecucion
                 return 0;
@@ -76,23 +79,24 @@ static int readUserInput(char * userInput, int n){
                 userInput[counter++]=c;
         }
     }
-    turnOffCursor();
+    //turnOffCursor();
     putChar('\n');
     userInput[counter]=0;  
     return 1; 
 }
 
-static void processInstruction( char * userInput, int functionCount, functionPackage functionArray[]){
-    for (int i = 0; i < functionCount; i++){
+static void processInstruction(char * userInput, int functionCount, functionPackage functionArray[]){
+    //print("HOLA");
+    // for (int i = 0; i < functionCount; i++){
         
-       if(!strcmp(userInput, functionArray[i].functionName)){
-           functionArray[i].function();
-           return;
-       }
-    }
+    //    if(!strcmp(userInput, functionArray[i].functionName)){
+    //        functionArray[i].function();
+    //        return;
+    //    }
+    // }
 
-    print("No existe la funcion ");
-    println(userInput);
+    // print("No existe la funcion ");
+    // println(userInput);
     
 }
 

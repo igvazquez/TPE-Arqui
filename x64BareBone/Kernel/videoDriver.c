@@ -86,7 +86,7 @@ void drawChar(int x, int y, char character, int fontColor, int backgroundColor){
 
 	for (int i = 0; i < CHAR_HEIGHT; i++){
 		for (int j = 0; j < CHAR_WIDTH; j++){
-			bitIsPresent = (1 << (CHAR_WIDTH - j)) & toDraw[i];
+			bitIsPresent = (1 << (CHAR_WIDTH - j)) & toDraw[i]; //JUGADISIMO pero se le puede restar 1 a j
 
 			if(bitIsPresent)
 				drawPixel(aux_x, aux_y, fontColor);

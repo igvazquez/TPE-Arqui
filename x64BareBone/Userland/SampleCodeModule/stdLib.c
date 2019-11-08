@@ -64,7 +64,6 @@ void scanf(char * output, int n){
     while(counter < n-1 && (c=getChar())!='\n'){
         if(c){
 
-            //putChar(c);
             if(c == '\b'){
                 if(counter >= 1)
                     counter--;
@@ -76,7 +75,6 @@ void scanf(char * output, int n){
                 output[counter++]=c;
         }
     }
-    //putChar('\n');
     output[counter]=0;   
 }
 void putCharf(char c, unsigned int backgroundColor, unsigned int fontColor){

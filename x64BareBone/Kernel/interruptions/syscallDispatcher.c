@@ -28,7 +28,7 @@ int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx){
             drawPixel(rsi, rdx, rcx);
             break;
         case 7:
-            setCursorPos(rsi, rdx);
+            setCursorPos(rdx, rsi); //Dados vuelta porque primero va x(rdx) y luego y(rsi)
             break;
         
     

@@ -145,6 +145,9 @@ _irq05Handler:
 _syscallHandler:
 	push rcx
 	push rdx
+	push rdi
+	push rsi
+
 	mov rsi, rcx
 	mov rcx, rdx
 	mov rdx, rsi
@@ -152,8 +155,10 @@ _syscallHandler:
 	mov rdi, rax 
     mov rsi, rbx
 	
-
 	call syscallDispatcher
+
+	pop rsi
+	pop rdi
 	pop rdx
 	pop rcx
 	iretq

@@ -116,7 +116,7 @@ void printChar(char c){
 		setCursorPos(0, SCREEN_HEIGHT - 1);
 	}
 
-	drawChar(cursorPosX*CHAR_WIDTH, cursorPosY*CHAR_HEIGHT, c, backgroundColor, textColor);
+	drawChar(cursorPosX*CHAR_WIDTH, cursorPosY*CHAR_HEIGHT, c, textColor, backgroundColor);
 
 	if(cursorPosX + 1 >= SCREEN_WIDTH){
         cursorPosY++;
@@ -126,7 +126,7 @@ void printChar(char c){
 }
 
 void setColorMode(unsigned int newBackgroundColor, unsigned int newFontColor){
-	if(newBackgroundColor < 0 || newBackgroundColor >= LAST_COLOR_MODE || newFontColor < 0 || newFontColor >= LAST_COLOR_MODE)
+	if(newBackgroundColor < 0 || newBackgroundColor > LAST_COLOR_MODE || newFontColor < 0 || newFontColor > LAST_COLOR_MODE)
 		return;
 
     backgroundColor = newBackgroundColor;
@@ -135,7 +135,7 @@ void setColorMode(unsigned int newBackgroundColor, unsigned int newFontColor){
 
 //Absolute movement
 void setCursorPos(unsigned int x, unsigned int y){
-    if( 1/*IS_CURSOR_IN_BOUNDS(x, y)*/){
+    if( IS_CURSOR_IN_BOUNDS(x, y)){
         cursorPosX = x;
 		cursorPosY = y;
     }
@@ -173,7 +173,7 @@ static void scrollDownOnce(){
 static void tab(){
 
 	if(cursorPosX + 4 >= SCREEN_WIDTH)
-		cursorPosX = SCREEN_WIDTH;
+		cursorPosX = SCREEN_WIDTH - 1;
 	else 
 		cursorPosX += 4;
 }
