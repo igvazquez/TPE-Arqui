@@ -81,8 +81,8 @@ setCursorPosAsm:
 	push rcx
 
 	mov rax, 7
-	mov rbx, rdi
-	mov rcx, rdx
+	mov rbx, rsi
+	mov rcx, rdi
 	int 80h
 
 	pop rcx

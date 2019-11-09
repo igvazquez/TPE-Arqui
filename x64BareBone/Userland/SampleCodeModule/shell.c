@@ -31,8 +31,8 @@ int startShell(){
     print("$> ");
 
     while(readUserInput(userInput, USER_INPUT_MAX_SIZE)){
-        //print("hola");
-        //processInstruction(userInput, functionCount, functionArray);
+        //SI DESCOMENTAMOS ESTA FUNCION, A PESAR DE ESTAR TODA COMENTADA, EXPLOTA.
+        processInstruction(userInput, functionCount, functionArray);
         printf(LINE_MESSAGE, 0x000000, 0x007F00);
         print("$> ");
     }
@@ -136,7 +136,6 @@ static int triggerException0(){
     return 0;
 }
 static int triggerException6(){
-    print("hola");
     triggerException6Asm();
     return 0;
 }
