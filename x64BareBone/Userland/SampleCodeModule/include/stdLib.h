@@ -6,6 +6,8 @@
 
 enum registers {RAX=0, RBX, RCX, RDX, RBP, RDI, RSI, R8, R9, R10, R11, R12, R13, R14, R15, RIP};
 
+//TODO clear screen 
+
 void putChar(char c);
 
 void putCharf(char c, unsigned int backgroundColor, unsigned int fontColor);
@@ -25,6 +27,10 @@ int strcmp(char * s1, char * s2);
 void ncPrintBin(uint64_t value);
 
 void ncPrintBase(uint64_t value, uint32_t base);
+
+int getScreenHeight();
+
+int getScreenWidth();
 
 //ASM
 extern int getTicksElapsed();

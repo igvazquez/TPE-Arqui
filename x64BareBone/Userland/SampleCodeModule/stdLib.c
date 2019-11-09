@@ -1,7 +1,8 @@
 #include <stdLib.h>
 
 static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
-
+#define CHAR_WIDTH 8
+#define CHAR_HEIGHT 16
 #define DEFAULT_BACKGROUND_COLOR 0x000000 //Negro
 #define DEFAULT_FONT_COLOR 0xFFFFFF //Blanco
 
@@ -120,4 +121,12 @@ int strcmp(char * s1, char * s2){
     else 
         return -1;
 
+}
+
+int getScreenHeight(){
+    return getVerticalPixelCount() / CHAR_HEIGHT;
+}
+
+int getScreenWidth(){
+    return getHorizontalPixelCount() / CHAR_WIDTH;
 }
