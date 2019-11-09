@@ -1,8 +1,7 @@
 #include <shell.h>
-
 #define NEGRO 0x000000
 #define VERDE_O 0x007F00
-
+saveFile_t arcanoidSaveFile;
 typedef struct{
     char * functionName;
     int (*function)();
@@ -16,6 +15,8 @@ typedef struct{
     static int triggerException0();
     static int triggerException6();
     static int inforeg();
+    static int arkanoid();
+    static int cleanScreen();
 //End static prototypes
 
 int functionCount;
@@ -23,6 +24,7 @@ functionPackage functionArray[FUNCTION_NUMBER];
 
 int startShell(){
     
+    cleanScreen();
     functionCount = 0;
     loadFunctions();
     
@@ -45,7 +47,6 @@ static int readUserInput(char * userInput, int bufferSize){
     
     char c;
     int counter = 0;
-    uint8_t currentTick, lastTick = -1;
 
     while(counter < bufferSize-1 && (c=getChar())!='\n'){
 
@@ -93,6 +94,8 @@ static void loadFunctions(){
     loadFunction( "triggerException0", triggerException0);
     loadFunction( "triggerException6", triggerException6);
     loadFunction( "inforeg", inforeg);
+    loadFunction("arcanoid", arkanoid);
+    loadFunction("clear", cleanScreen);
 }
 
 static void loadFunction(char * functionName, int (*function)()){
@@ -101,6 +104,10 @@ static void loadFunction(char * functionName, int (*function)()){
     functionCount++;
 }
 
+static int arkanoid(){
+    arcanoidSaveFile = startGame(arcanoidSaveFile);
+    cleanScreen();  
+}
 static int inforeg(){
     printAllRegisters();
     return 0;
@@ -116,4 +123,11 @@ static int triggerException6(){
     triggerException6Asm();
     return 0;
 }
-
+static int cleanScreen(){
+    
+    setCursorPos(0,0);
+    for (int i = 0; i < getScreenHeight() * getScreenWidth() ; i++){
+        putChar(' ');
+    }
+    setCursorPos(getScreenHeight() - 1, 0);
+}

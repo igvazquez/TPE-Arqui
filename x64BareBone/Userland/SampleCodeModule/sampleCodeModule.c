@@ -1,6 +1,6 @@
 // sampleCodeModule.c
 #include <shell.h>
 
-int main() {	
+int main() {
 	return startShell();
 }
