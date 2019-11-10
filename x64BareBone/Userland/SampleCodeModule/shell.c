@@ -1,7 +1,12 @@
 #include <shell.h>
+#include <clock.h>
+#include <stdLib.h>
+
 #define NEGRO 0x000000
 #define VERDE_O 0x007F00
+
 saveFile_t arcanoidSaveFile;
+
 typedef struct{
     char * functionName;
     int (*function)();
@@ -13,6 +18,7 @@ typedef struct{
     static void loadFunctions();
     static int readUserInput(char * userInput, int n);
     static int triggerException0();
+    static void printTime();
     static int triggerException6();
     static int inforeg();
     static int arkanoid();
@@ -94,8 +100,9 @@ static void loadFunctions(){
     loadFunction( "triggerException0", triggerException0);
     loadFunction( "triggerException6", triggerException6);
     loadFunction( "inforeg", inforeg);
-    loadFunction("arcanoid", arkanoid);
     loadFunction("clear", cleanScreen);
+    loadFunction("clock",printTime);
+    loadFunction("arcanoid", arkanoid);
 }
 
 static void loadFunction(char * functionName, int (*function)()){
@@ -104,10 +111,31 @@ static void loadFunction(char * functionName, int (*function)()){
     functionCount++;
 }
 
+static void printTime(){
+    int aux = bsdToInt(getCurrentTime(HOURS));
+    if( aux < 3)
+        aux = 24 + aux - 3;
+    else
+        aux -= 3;
+    
+    ncPrintBase(aux, 10);
+
+    putChar(':');
+
+    ncPrintBase(bsdToInt(getCurrentTime(MINUTES)), 10);
+
+    putChar(':');
+
+    ncPrintBase(bsdToInt(getCurrentTime(SECONDS)), 10);
+    
+    putChar('\n');
+}
+
 static int arkanoid(){
     arcanoidSaveFile = startGame(arcanoidSaveFile);
     cleanScreen();  
 }
+
 static int inforeg(){
     printAllRegisters();
     return 0;

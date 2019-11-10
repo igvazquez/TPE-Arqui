@@ -49,6 +49,10 @@ static uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base);
         return digits;
     }
 
+    int bsdToInt(uint8_t input){
+        return input / 16 * 10 + input % 16;
+    }
+
 //Print number
 
 void putChar(char c){

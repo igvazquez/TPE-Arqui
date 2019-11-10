@@ -8,6 +8,7 @@ GLOBAL write
 GLOBAL printAllRegisters
 GLOBAL drawPixel
 GLOBAL setCursorPos
+GLOBAL getCurrentTime
 
 GLOBAL triggerException6Asm
 
@@ -87,6 +88,9 @@ drawPixel:
 setCursorPos:
 	sysCaller 7
 ;SysCall 7: ubica el cursor para el SysCall 4
+getCurrentTime:
+    sysCaller 8
+;SysCall 8: devuelve la hora, minutos o segundos del reloj
 
 triggerException6Asm:
 	int 300h

@@ -4,6 +4,7 @@ GLOBAL picMasterMask
 GLOBAL picSlaveMask
 GLOBAL haltcpu
 GLOBAL _hlt
+GLOBAL sysRTC
 
 GLOBAL _irq00Handler
 GLOBAL _irq01Handler
@@ -208,6 +209,16 @@ haltcpu:
 	hlt
 	ret
 ;
+
+GLOBAL callRTC
+
+sysRTC:
+	mov rax, rdi ;Time Descriptor
+    out 70h, al
+    in al, 71h
+	ret
+;
+
 
 SECTION .bss
 	aux resq 1

@@ -7,6 +7,7 @@
 #include <defs.h>
 #include <videoDriver.h>
 #include <keyboardDriver.h>
+#include <interrupts.h>
 
 int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx){
 	switch (rdi){
@@ -54,6 +55,10 @@ int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx){
         case 7:
             setCursorPos(rsi, rdx); 
             break;
+        //SysCall 8: devuelve la hora, minutos o segundos del reloj
+        //RBX   /  RSI : timeID : minutos hora o segundos
+        case 8:
+            return sysRTC(rsi); 
     }
     return 0;
 }

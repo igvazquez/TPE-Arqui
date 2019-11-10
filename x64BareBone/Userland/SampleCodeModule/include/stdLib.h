@@ -32,6 +32,8 @@ int getScreenHeight();
 
 int getScreenWidth();
 
+int bsdToInt(uint8_t input);
+
 //ASM
 extern int getTicksElapsed();
 
