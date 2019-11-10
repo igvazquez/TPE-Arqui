@@ -1,5 +1,6 @@
-#ifndef LIB_H
-#define LIB_H
+//lib.h
+#ifndef __LIB_H__
+#define __LIB_H__
 
 #include <stdint.h>
 #include <screenDriver.h>

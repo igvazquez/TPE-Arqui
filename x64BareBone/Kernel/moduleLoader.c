@@ -1,11 +1,6 @@
 #include <stdint.h>
 #include <lib.h>
 #include <moduleLoader.h>
-#include <videoDriver.h>
-
-static void loadModule(uint8_t ** module, void * targetModuleAddress);
-static uint32_t readUint32(uint8_t ** address);
-
 void loadModules(void * payloadStart, void ** targetModuleAddress)
 {
 	int i;

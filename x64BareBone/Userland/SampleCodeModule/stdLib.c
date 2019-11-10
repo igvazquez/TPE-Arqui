@@ -128,7 +128,6 @@ int strcmp(char * s1, char * s2){
 }
 void printRegisters(){
 		print("Registro RAX: ");
-		ncPrintBin(getRegister(RAX));
 		putChar('\n');
 
 		print("Registro RBX: ");
@@ -190,4 +189,5 @@ void printRegisters(){
 		// printString("Registro RPI: ");
 		// ncPrintBin(getRegister(RIP));
 		// printChar('\n');
-}
+
+int getScreenHeight(){
