@@ -145,6 +145,7 @@ static int triggerException0(){
     int a = 4/0;
     return a;
 }
+
 //TODO
 static int triggerException6(){
     print("hola");
