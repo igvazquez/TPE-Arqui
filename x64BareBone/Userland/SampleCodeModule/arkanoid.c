@@ -22,7 +22,7 @@ void startArkanoid(){
 static void drawBricks(){
     for (int i = 500; i < 516; i++)
         for (int j = 500; j < 516; j++)
-            drawPixelSys(i,j,0xffffff);
+            drawPixel(i,j,0xffffff);
 }
 
 static void drawBall(unsigned int x, unsigned int y){
@@ -34,25 +34,25 @@ static void drawBall(unsigned int x, unsigned int y){
                 color = 0xFFFFFF;
             else
                 color = 0x000000;
-            drawPixelSys(x + i, y + j, color);
+            drawPixel(x + i, y + j, color);
             // UPPER RIGHT
             if(i < j + 2)
                 color = 0xFFFFFF;
             else
                 color = 0x000000;
-            drawPixelSys(x + i + 8, y + j, color);
+            drawPixel(x + i + 8, y + j, color);
             // BOTTOM LEFT
              if(i > j - 2)
                 color = 0xFFFFFF;
             else
                 color = 0x000000;
-            drawPixelSys(x + i, y + j + 8, color);
+            drawPixel(x + i, y + j + 8, color);
             // BOTTOM RIGHT
              if(i < 7 + 2 - j)
                 color = 0xFFFFFF;
             else
                 color = 0x000000;
-            drawPixelSys(x + i + 8, y + j + 8, color);
+            drawPixel(x + i + 8, y + j + 8, color);
         }
 }
 

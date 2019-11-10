@@ -72,6 +72,9 @@ void * initializeKernelBinary(){
 	newLine();
 
 	printString("[Done]");
+	newLine();
+	newLine();
+	return getStackBase();
 }
 
 int main(){	

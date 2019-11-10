@@ -1,6 +1,9 @@
 // sampleCodeModule.c
 #include <shell.h>
+#include <arkanoid.h>
 
 int main() {
-	return startShell();
+	startArkanoid();
+
+	return 1;
 }
