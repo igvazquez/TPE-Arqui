@@ -1,64 +1,62 @@
 #include <shell.h>
+#include <clock.h>
+#include <stdLib.h>
 
-int cursorTickState = 0;
+#define NEGRO 0x000000
+#define VERDE_O 0x007F00
+
+saveFile_t arcanoidSaveFile;
+
 typedef struct{
     char * functionName;
     int (*function)();
 }functionPackage;
 
-static int readUserInput(char * userInput, int n);
-static void processInstruction(char * userInput, int functionCount, functionPackage functionArray[]);
-static void tickCursor();
-static void turnOffCursor();
-static void loadFunctions(functionPackage functionArray[], int * functionCount);
-static void loadFunction(functionPackage functionArray[], int * functionCount, char * functionName, int (*function)());
-static int triggerException0();
-static int triggerException6();
-int triggerException6Asm();
-static int inforeg();
+//Static prototypes
+    static void loadFunction( char * functionName, int (*function)());
+    static void processInstruction(char * userInput);
+    static void loadFunctions();
+    static int readUserInput(char * userInput, int n);
+    static int triggerException0();
+    static void printTime();
+    static int triggerException6();
+    static int inforeg();
+    static int arkanoid();
+    static int cleanScreen();
+//End static prototypes
 
+int functionCount;
+functionPackage functionArray[FUNCTION_NUMBER];
 
 int startShell(){
-
-    functionPackage functionArray[FUNCTION_NUMBER];
-    int functionCount = 0;
-    loadFunctions(functionArray, &functionCount);
+    
+    cleanScreen();
+    functionCount = 0;
+    loadFunctions();
     
     char userInput[USER_INPUT_MAX_SIZE]; //Le agrego el 0
 
     setCursorPos(getScreenHeight() - 1, 0);
-    printf(LINE_MESSAGE, 0x000000, 0x007F00);
+    printf(LINE_MESSAGE, NEGRO, VERDE_O);
     print("$> ");
 
     while(readUserInput(userInput, USER_INPUT_MAX_SIZE)){
-        //print("hola");
-        //processInstruction(userInput, functionCount, functionArray);
-        printf(LINE_MESSAGE, 0x000000, 0x007F00);
+        processInstruction(userInput);
+        printf(LINE_MESSAGE, NEGRO, VERDE_O);
         print("$> ");
     }
 
     return 0;
 }
 
-static int readUserInput(char * userInput, int n){
+static int readUserInput(char * userInput, int bufferSize){
+    
     char c;
     int counter = 0;
-    int lastCursorTick = 0;
-    int currentTicksElapsed = 0;
 
-    while(counter < n-1 && (c=getChar())!='\n'){
-
-        currentTicksElapsed = getTicksElapsed();
-
-        //NO ES MUCHO 10*TICKS_PER_SECOND ?? CAPAZ SE ESTA TRAYENDO MAL LOS TIMER TICKS?
-        // if(currentTicksElapsed != lastCursorTick && currentTicksElapsed % 10*TICKS_PER_SECOND == 0){ //Para que el cursor parpadee
-        //     tickCursor();
-        //     lastCursorTick = currentTicksElapsed; //Si no hago esto, el while va mas rapido que los ticks.
-        // }
+    while(counter < bufferSize-1 && (c=getChar())!='\n'){
 
         if(c){
-
-            //turnOffCursor();
 
             if(c == END_SHELL_KEY) //Cortar ejecucion
                 return 0;
@@ -79,65 +77,85 @@ static int readUserInput(char * userInput, int n){
                 userInput[counter++]=c;
         }
     }
-    //turnOffCursor();
     putChar('\n');
     userInput[counter]=0;  
     return 1; 
 }
 
-static void processInstruction(char * userInput, int functionCount, functionPackage functionArray[]){
-    //print("HOLA");
-    // for (int i = 0; i < functionCount; i++){
+static void processInstruction(char * userInput){
+
+    for (int i = 0; i < functionCount; i++){
         
-    //    if(!strcmp(userInput, functionArray[i].functionName)){
-    //        functionArray[i].function();
-    //        return;
-    //    }
-    // }
-
-    // print("No existe la funcion ");
-    // println(userInput);
-    
-}
-
-static void tickCursor(){
-    if(cursorTickState){
-        putChar('\b');
-    } else {
-        putCharf(' ', CURSOR_COLOR, DEFAULT_FONT_COLOR);
+       if(!strcmp(userInput, functionArray[i].functionName)){
+           functionArray[i].function();
+           return;
+       }
     }
-    cursorTickState = !cursorTickState;
+
+    print("No existe la funcion ");
+    println(userInput);
 }
 
-static void turnOffCursor(){
-    if(cursorTickState)
-        putChar('\b');
-    cursorTickState = 0;
+static void loadFunctions(){
+    loadFunction( "triggerException0", triggerException0);
+    loadFunction( "triggerException6", triggerException6);
+    loadFunction( "inforeg", inforeg);
+    loadFunction("clear", cleanScreen);
+    loadFunction("clock",printTime);
+    loadFunction("arcanoid", arkanoid);
 }
 
-static void loadFunctions(functionPackage functionArray[], int * functionCount){
-    loadFunction(functionArray, functionCount, "triggerException0", triggerException0);
-    loadFunction(functionArray, functionCount, "triggerException6", triggerException6);
-    loadFunction(functionArray, functionCount, "inforeg", inforeg);
+static void loadFunction(char * functionName, int (*function)()){
+    functionArray[functionCount].functionName = functionName;
+    functionArray[functionCount].function = function;
+    functionCount++;
 }
 
-static void loadFunction(functionPackage functionArray[], int * functionCount, char * functionName, int (*function)()){
-    functionArray[*functionCount].functionName = functionName;
-    functionArray[*functionCount].function = function;
-    *functionCount = *functionCount + 1;
+static void printTime(){
+    int aux = bsdToInt(getCurrentTime(HOURS));
+    if( aux < 3)
+        aux = 24 + aux - 3;
+    else
+        aux -= 3;
+    
+    ncPrintBase(aux, 10);
+
+    putChar(':');
+
+    ncPrintBase(bsdToInt(getCurrentTime(MINUTES)), 10);
+
+    putChar(':');
+
+    ncPrintBase(bsdToInt(getCurrentTime(SECONDS)), 10);
+    
+    putChar('\n');
 }
+
+static int arkanoid(){
+    arcanoidSaveFile = startGame(arcanoidSaveFile);
+    cleanScreen();  
+}
+
 static int inforeg(){
-    getAllRegisters();
+    printAllRegisters();
     return 0;
 }
 
 static int triggerException0(){
     int a = 4/0;
-    return 0;
+    return a;
 }
+//TODO
 static int triggerException6(){
     print("hola");
     triggerException6Asm();
     return 0;
 }
-
+static int cleanScreen(){
+    
+    setCursorPos(0,0);
+    for (int i = 0; i < getScreenHeight() * getScreenWidth() ; i++){
+        putChar(' ');
+    }
+    setCursorPos(getScreenHeight() - 1, 0);
+}

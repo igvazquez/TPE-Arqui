@@ -3,7 +3,6 @@
 #include <lib.h>
 #include <moduleLoader.h>
 #include <screenDriver.h>
-#include <keyboardDriver.h>
 #include <idtLoader.h>
 
 extern uint8_t text;
@@ -20,14 +19,11 @@ static void * const sampleDataModuleAddress = (void*)0x500000;
 
 typedef int (*EntryPoint)();
 
-
-void clearBSS(void * bssAddress, uint64_t bssSize)
-{
+void clearBSS(void * bssAddress, uint64_t bssSize){
 	memset(bssAddress, 0, bssSize);
 }
 
-void * getStackBase()
-{
+void * getStackBase(){
 	return (void*)(
 		(uint64_t)&endOfKernel
 		+ PageSize * 8				//The size of the stack itself, 32KiB
@@ -35,20 +31,18 @@ void * getStackBase()
 	);
 }
 
-void * initializeKernelBinary()
-{
+void * initializeKernelBinary(){
 	char buffer[10];
-	init_VM_Driver();
-	setCursorPos(0,0);
+
 	printString("[x64BareBones]");
-	ncNewline();
+	newLine();
 
 	printString("CPU Vendor:");
 	printString(cpuVendor(buffer));
-	ncNewline();
+	newLine();
 
 	printString("[Loading modules]");
-	ncNewline();
+	newLine();
 	void * moduleAddresses[] = {
 		sampleCodeModuleAddress,
 		sampleDataModuleAddress
@@ -56,64 +50,53 @@ void * initializeKernelBinary()
 
 	loadModules(&endOfKernelBinary, moduleAddresses);
 	printString("[Done]");
-	ncNewline();
-	ncNewline();
+	newLine();
+	newLine();
 
 	printString("[Initializing kernel's binary]");
-	ncNewline();
+	newLine();
 
 	clearBSS(&bss, &endOfKernel - &bss);
 
 	printString("  text: 0x");
 	ncPrintHex((uint64_t)&text);
-	ncNewline();
+	newLine();
 	printString("  rodata: 0x");
 	ncPrintHex((uint64_t)&rodata);
-	ncNewline();
+	newLine();
 	printString("  data: 0x");
 	ncPrintHex((uint64_t)&data);
-	ncNewline();
+	newLine();
 	printString("  bss: 0x");
 	ncPrintHex((uint64_t)&bss);
-	ncNewline();
+	newLine();
 
 	printString("[Done]");
-	ncNewline();
-	ncNewline();
+	newLine();
+	newLine();
 	return getStackBase();
 }
 
-int main()
-{	
+int main(){	
 	load_idt();
-	init_VM_Driver();
-
+	initializeScreenDriver();
 	printString("[Kernel Main]");
-	ncNewline();
+	newLine();
 	printString("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
-	ncNewline();
+	newLine();
+	printString("  Calling the sample code module returned: ");
+	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
+	newLine();
+	newLine();
 
-	ncClear();
+	printString("  Sample data module at 0x");
+	ncPrintHex((uint64_t)sampleDataModuleAddress);
+	newLine();
+	printString("  Sample data module contents: ");
+	printString((char*)sampleDataModuleAddress);
+	newLine();
 
-	int SampleCodeReturnValue = ((EntryPoint)sampleCodeModuleAddress)();
-
-	//setColorMode(DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR);
-	//ncClear();
-
-	// printString("  Calling the sample code module returned: ");
-	// //ncPrintHex(SampleCodeReturnValue);
-	// ncNewline();
-	// ncNewline();
-
-	// printString("  Sample data module at 0x");
-	// ncPrintHex((uint64_t)sampleDataModuleAddress);
-	// ncNewline();
-	// printString("  Sample data module contents: ");
-	// printString((char*)sampleDataModuleAddress);
-	// ncNewline();
-
-	printString("[Finished]");
-
+	printString("[Finished]\n");
 	return 0;
 }

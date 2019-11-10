@@ -1,26 +1,58 @@
-#ifndef _STD_LIB_
-#define _STD_LIB_
-#include <stdint.h>
+//stdLib.h
+#ifndef __STD_LIB_H__
+#define __STD_LIB_H__
 
-#define DEFAULT_BACKGROUND_COLOR 0x000000
-#define DEFAULT_FONT_COLOR 0xFFFFFF
+#include <stdint.h>
 
 enum registers {RAX=0, RBX, RCX, RDX, RBP, RDI, RSI, R8, R9, R10, R11, R12, R13, R14, R15, RIP};
 
-char getChar();
-void ncPrintBin(uint64_t value);
+//TODO clear screen 
+
 void putChar(char c);
+
 void putCharf(char c, unsigned int backgroundColor, unsigned int fontColor);
+
 void print(char * string);
+
 void printf(char * string, unsigned int backgroundColor, unsigned int fontColor);
+
 void println(char * string);
+
 void scanf(char * output, int n);
-void setCursorPos(int row, int col);
+
 int strlen(char * s);
-int getTicksElapsed();
-void getAllRegisters();
+
 int strcmp(char * s1, char * s2);
-void printRegisters();
+
+void ncPrintBin(uint64_t value);
+
 void ncPrintBase(uint64_t value, uint32_t base);
-void drawPixelSys(unsigned int x, unsigned int y, int color);
+
+int getScreenHeight();
+
+int getScreenWidth();
+
+int bsdToInt(uint8_t input);
+
+//ASM
+extern int getTicksElapsed();
+
+extern int getVerticalPixelCount();
+
+extern int getHorizontalPixelCount();
+
+extern char getChar();
+
+extern void write(char* string, unsigned int backgroundColor, unsigned int fontColor);
+
+extern void printAllRegisters();
+
+extern void drawPixel(unsigned int x, unsigned int y, int color);
+
+extern void setCursorPos(int row, int col);
+
+extern void triggerException6Asm();
+
+extern uint64_t getRegister(enum registers reg);
+
 #endif
