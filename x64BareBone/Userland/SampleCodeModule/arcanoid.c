@@ -120,7 +120,7 @@ saveFile_t startGame(saveFile_t saveFile){
         bricksLeft = 0;
         for (int i = 0; i < BRICKS_PER_COLUMN; i++)
             for (int k = 0; k < BRICKS_PER_ROW; k++)
-                if(bricks[i][k] = bricks[i][k])
+                if((bricks[i][k] = bricks[i][k]))
                     bricksLeft++;
 
         bar_x = saveFile.bar_x;  
@@ -141,6 +141,7 @@ saveFile_t startGame(saveFile_t saveFile){
         ans.lives = lives;
         ans.speed = speed;
         ans.ball = saveBall(ans);
+        return ans;
     }
 
     static void setUpBall(){
@@ -221,11 +222,11 @@ saveFile_t play(){
             // aux++;
             // if(aux % 50 == 0)
             //     speed--;
-            //moveBall();
+            moveBall();
             lastTick = currentTick;
         }
     }    
-    
+    endGame();
     return exitGame();
 }
 
@@ -257,18 +258,18 @@ static int winningCondition(){
 }
 
 static void moveBall(){
-    //removeBall();
-    // ball.x += ball.vx;
-    // ball.y += ball.vy;
-    // if(ball.y < BAR_Y){
-    //     tryHorizontalBounce();
-    //     tryVerticalBounce();
-    // }else{
-    //     lives--;
-    //     updateLives();
-    //     setUpBall();
-    // }
-    //printBall();
+    removeBall();
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+    if(ball.y < BAR_Y){
+        tryHorizontalBounce();
+        tryVerticalBounce();
+    }else{
+        lives--;
+        updateLives();
+        setUpBall();
+    }
+    printBall();
 }
 
 static void tryHorizontalBounce(){
@@ -342,8 +343,7 @@ static void tryVerticalBounce(){
 
         for (int i = 0; i < BRICKS_PER_COLUMN; i++){
             printBricksRow(i);
-            
-
+        
         }
     }
 

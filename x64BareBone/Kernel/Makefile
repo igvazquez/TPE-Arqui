@@ -37,6 +37,6 @@ $(KERNEL):  $(STATICLIBS) $(ALLOBJECTS)
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:
-	rm -rf asm/*.o *.o *.bin drivers/*.o
+	rm -rf asm/*.o *.o *.bin drivers/*.o interrupts/*.o
 
 .PHONY: all clean
