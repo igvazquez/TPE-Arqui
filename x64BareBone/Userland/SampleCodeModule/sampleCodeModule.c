@@ -3,7 +3,7 @@
 #include <stdLib.h>
 
 int main() {
-	println("WELCOMEHOME");
+	/* println("WELCOMEHOME");
 	println("WELCOMEHOME");
 	println("WELCOMEHOME");
 	println("WELCOMEHOME");
@@ -19,16 +19,17 @@ int main() {
 	setCursorPos(0,0);
 	// ncPrintBase(height,10);
 	//println("");
-	//drawPixel(150,300,1523);
+	// drawPixel(150,300,1523);
 	// ncPrintBase(width,10);
-	// for (int i = 0; i < getScreenHeight() * getScreenWidth(); i++)
-	// 	print(" ");
+	for (int i = 0; i < getScreenHeight() * getScreenWidth(); i++)
+		print(" ");
+	setCursorPos(0,0);
 	ncPrintBase(getScreenWidth(),10);
 	println("");
 	ncPrintBase(getScreenHeight(),10);
 	
 	
 	while(1){}
-	return 1;
-	// return startShell();
+	return 1; */
+	return startShell();
 }

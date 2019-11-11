@@ -83,14 +83,15 @@ static int readUserInput(char * userInput, int bufferSize){
 }
 
 static void processInstruction(char * userInput){
-   
+
    for (int i = 0; i < functionCount; i++){
         
-        if(!strcmp( userInput, functionArray[i].functionName)){
-          functionArray[i].function();
-           return;
-        }
-     }
+
+        // if(!strcmp( userInput, functionArray[i].functionName)){
+        //    functionArray[i].function();
+        //    return;
+        // 
+    }
 
     print("No existe la funcion ");
     println(userInput);
@@ -135,7 +136,7 @@ static void loadFunction(char * functionName, int (*function)()){
 
     static int arkanoid(){
         arcanoidSaveFile = startGame(arcanoidSaveFile);
-        usrClearScreen();  
+        usrClearScreen();
         return 0;
     }
 
