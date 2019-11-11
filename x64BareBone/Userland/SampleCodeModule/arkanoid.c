@@ -17,6 +17,16 @@
 
     #define INVERT -1
 //End Defines
+
+typedef struct{
+    int xc;
+    int yc;
+    char vx;
+    char vy;
+} ball_t;
+
+ball_t ball;
+
 static void drawBricks();
 static void drawBall(unsigned int x, unsigned int y);
 void drawBar(unsigned int x, unsigned int y);
@@ -26,6 +36,13 @@ void startArkanoid(){
     drawBricks();
     drawBall(500,500);
     drawBar(500,700);
+}
+
+void initGame(){
+    ball.vx = 1;
+    ball.vy = 1;
+    ball.xc = 500;
+    ball.yc = 500;
 }
 
 static void drawBricks(){
