@@ -30,7 +30,7 @@ functionPackage functionArray[FUNCTION_NUMBER];
 
 int startShell(){
     
-    clearScreen();
+    usrClearScreen();
     functionCount = 0;
     loadFunctions();
     
@@ -135,7 +135,7 @@ static void loadFunction(char * functionName, int (*function)()){
 
     static int arkanoid(){
         arcanoidSaveFile = startGame(arcanoidSaveFile);
-        clearScreen();  
+        usrClearScreen();  
         return 0;
     }
 
@@ -156,7 +156,7 @@ static void loadFunction(char * functionName, int (*function)()){
     }
 
     static int clear(){
-        clearScreen();
+        usrClearScreen();
         return 0;
     }
 //END Modules

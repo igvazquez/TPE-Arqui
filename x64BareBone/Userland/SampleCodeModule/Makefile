@@ -17,6 +17,6 @@ $(MODULE): $(SOURCES) $(OBJECTS_ASM)
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:
-	rm -rf *.o asm/*.o
+	rm -rf *.o asm/*.o 
 
 .PHONY: all clean print

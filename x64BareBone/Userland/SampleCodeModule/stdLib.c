@@ -135,11 +135,11 @@ int getScreenWidth(){
     return getHorizontalPixelCount() / CHAR_WIDTH;
 }
 
-void clearScreen(){
-        
-        setCursorPos(0,0);
-        for (int i = 0; i < getScreenHeight() * getScreenWidth() ; i++){
-            putChar(' ');
-        }
-        setCursorPos(getScreenHeight() - 1, 0);
+void usrClearScreen(){
+    
+    setCursorPos(0,0);
+    for (int i = 0; i < getScreenHeight() * getScreenWidth() ; i++){
+        putChar(' ');
+    }
+    setCursorPos(getScreenHeight() - 1, 0);
 }

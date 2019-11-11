@@ -53,7 +53,6 @@
 //Static Functions Prototypes
     static void printBricks();
     static void printBar();
-    static void cleanScreen();
     static void printBall();
     static void removeBall();
     static void removeBrick(int row, int column);
@@ -172,15 +171,6 @@ saveFile_t startGame(saveFile_t saveFile){
         return ans;
     }
 //End Saving & Loading
-
-static void cleanScreen(){
-    
-    setCursorPos(0,0);
-    for (int i = 0; i < getScreenHeight() * getScreenWidth() ; i++){
-        putChar(' ');
-    }
-    setCursorPos(0,0);
-}
 
 saveFile_t play(){
     
@@ -433,13 +423,13 @@ static void tryVerticalBounce(){
     }
 
     static void endGame(){
-        //cleanScreen();
+        //usrClearScreen();
         setCursorPos(SCREEN_HEIGHT/2,SCREEN_HEIGHT/3);
         printf("Perdiste :p", 0xFFFFFF, 0xFF0000);
     }
 
     static void initialScreen(){
-        cleanScreen();
+        usrClearScreen();
         setCursorPos(SCREEN_HEIGHT/2,SCREEN_WIDTH/2 - 10);
         printf("Press D to start:", 0xFFFFFF, 0x00FF00);
         char c;

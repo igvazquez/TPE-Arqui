@@ -51,16 +51,15 @@ section .text
 %endmacro
 
 %macro sysCaller 1
-	pushState
 
 	mov rax, %1 ; pasaje de parametro
-	mov rbx, rdi
-    mov rcx, rsi
-    ;mov rdx, rdx
+	mov rbx, rdi ; RBX
+    mov rcx, rsi ; RCX
+    ;mov rdx, rdx  RDX
     int 80h
 
-	popState
 	ret
+
 %endmacro
 
 
