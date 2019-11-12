@@ -5,8 +5,6 @@
 #define NEGRO 0x000000
 #define VERDE_O 0x007F00
 
-saveFile_t arcanoidSaveFile;
-
 typedef struct{
     char * functionName;
     int (*function)();
@@ -21,7 +19,6 @@ typedef struct{
     static int printTime();
     static int triggerException6();
     static int inforeg();
-    static int arkanoid();
     static int clear();
 //End static prototypes
 
@@ -85,12 +82,12 @@ static int readUserInput(char * userInput, int bufferSize){
 static void processInstruction(char * userInput){
 
    for (int i = 0; i < functionCount; i++){
-        
 
-        // if(!strcmp( userInput, functionArray[i].functionName)){
-        //    functionArray[i].function();
-        //    return;
-        // 
+        if(!strcmp( userInput, functionArray[i].functionName)){
+           functionArray[i].function();
+           return;
+        }
+        
     }
 
     print("No existe la funcion ");
@@ -101,7 +98,6 @@ static void loadFunctions(){
     loadFunction( "inforeg", inforeg);
     loadFunction("clear", clear);
     loadFunction("clock",printTime);
-    loadFunction("arcanoid", arkanoid);
     loadFunction( "triggerException0", triggerException0);
     loadFunction( "triggerException6", triggerException6);
 }
@@ -132,12 +128,6 @@ static void loadFunction(char * functionName, int (*function)()){
         putChar('\n');
         return 0;
 
-    }
-
-    static int arkanoid(){
-        arcanoidSaveFile = startGame(arcanoidSaveFile);
-        usrClearScreen();
-        return 0;
     }
 
     static int inforeg(){
