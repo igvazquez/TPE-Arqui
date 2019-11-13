@@ -15,7 +15,7 @@ $(MODULE): $(SOURCES) $(OBJECTS_ASM)
 	$(GCC) $(GCCFLAGS) -T sampleCodeModule.ld  -I./include _loader.c $(OBJECTS_ASM) $(SOURCES) -o ../$(MODULE)
 
 $(MODULE_ELF): $(SOURCES) $(OBJECTS_ASM)
-	$(GCC) $(GCCFLAGS) -T sampleCodeModule.ld  -I./include _loader.c $(OBJECTS_ASM) $(SOURCES) -Wl --oformat=elf64-x86-64 -o ../$(MODULE_ELF)
+	$(GCC) $(GCCFLAGS) -T sampleCodeModule.ld  -I./include _loader.c $(OBJECTS_ASM) $(SOURCES) -Wl,--oformat=elf64-x86-64 -o ../$(MODULE_ELF)
 
 
 %.o : %.asm

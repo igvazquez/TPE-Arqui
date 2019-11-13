@@ -9,3 +9,4 @@ x64BareBonesImage.vmdk
 settings.json
 .bash_history
 TPE.zip
+*.elf
