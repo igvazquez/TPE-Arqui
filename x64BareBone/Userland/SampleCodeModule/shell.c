@@ -89,7 +89,7 @@ int startShell(){
     //     print("$> ");
     // }
 
-    // return 0;
+    return 0;
 }
 
 static int readUserInput(char * userInput, int bufferSize){

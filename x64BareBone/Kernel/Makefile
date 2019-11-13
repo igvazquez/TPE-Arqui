@@ -1,6 +1,7 @@
 include Makefile.inc
 
-KERNEL=kernel.bin
+KERNEL = kernel.bin
+KERNEL_ELF = kernel.elf
 
 SOURCES=$(wildcard *.c)
 SOURCES_DRIVERS=$(wildcard drivers/*.c)
@@ -25,10 +26,13 @@ LOADERSRC=loader.asm
 LOADEROBJECT=$(LOADERSRC:.asm=.o)
 STATICLIBS=
 
-all: $(KERNEL)
+all: $(KERNEL) $(KERNEL_ELF)
 
 $(KERNEL):  $(STATICLIBS) $(ALLOBJECTS)
 	$(LD) $(LDFLAGS) -T kernel.ld -o $(KERNEL) $(ALLOBJECTS) $(STATICLIBS)
+
+$(KERNEL_ELF):  $(STATICLIBS) $(ALLOBJECTS)
+	$(LD) $(LDFLAGS) -T kernel.ld -o $(KERNEL_ELF) --oformat=elf64-x86-64 $(ALLOBJECTS) $(STATICLIBS)
 
 %.o: %.c
 	$(GCC) $(GCCFLAGS) -I./include  -I./drivers/include -I./interrupts/include -c $< -o $@
