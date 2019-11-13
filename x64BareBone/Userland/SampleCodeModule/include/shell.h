@@ -3,7 +3,6 @@
 #define __SHELL_H__
 
 #include <stdLib.h>
-#include <arcanoid.h>
 #define ESC 27
 #define TICKS_PER_SECOND 18
 #define LINE_MESSAGE "Fleshy-Shell"

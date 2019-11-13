@@ -5,7 +5,6 @@
 #define NEGRO 0x000000
 #define VERDE_O 0x007F00
 
-saveFile_t arcanoidSaveFile;
 
 typedef struct{
     char * functionName;
@@ -21,7 +20,6 @@ typedef struct{
     static int printTime();
     static int triggerException6();
     static int inforeg();
-    static int arkanoid();
     static int clear();
 //End static prototypes
 
@@ -29,24 +27,69 @@ int functionCount;
 functionPackage functionArray[FUNCTION_NUMBER];
 
 int startShell(){
-    
+    // char s[] = "asd";
     usrClearScreen();
-    functionCount = 0;
+    // setCursorPos(getScreenHeight()-1,0);
+    // print(s);
+
+    /* // ERROR 1
+    int a = 12;
+    ncPrintBase(21,10);
+    ncPrintBase(a,10);
+    ncPrintBase(12,10);
+    */
+
+  //ERROR 2 CANTIDAD DE PRINTS
+    // int a=3;
+    // putChar(a + '0');
+    // print("Test funciona");
+    // print("1");
+    // print("2");
+    // print("3");
+    // print("4");
+    // putChar(a + '2');
+    // loadFunctions();
+//ERROR 3 NCPRINTBASE CON VARIABLE
+    uint64_t a = 300002;
+    ncPrintBase(a, 10);
+   
+//ERROR 4 MAS DE 3 FUNCIONES LO ROMPE   
+        // inforeg();
+        // printTime();
+        // printTime();
+        // triggerException0();
+//     arkanoid();
+//     triggerException6();
+        // inforeg();
+        // clear();
+        // printTime();
+   // while (1);
+
+   //ERROR 5 SI HAGO UN ARRAY DE 50 DE CHAR FUNCIONA PERO DE INT NO
+   //char array[USER_INPUT_MAX_SIZE];
+   // uint8_t array[USER_INPUT_MAX_SIZE];
+   // uint16_t array[USER_INPUT_MAX_SIZE];
+  //  uint32_t array[USER_INPUT_MAX_SIZE]; HASTA ACA LLEGAMOS
+   //int array [USER_INPUT_MAX_SIZE];
+
+    // END TEST
+
     loadFunctions();
+    //char userInput[USER_INPUT_MAX_SIZE]; //Le agrego el 0
+    //print("1");
+    //print("1");
     
-    char userInput[USER_INPUT_MAX_SIZE]; //Le agrego el 0
+    // setCursorPos(getScreenHeight() - 1, 0);
+    // printf(LINE_MESSAGE, NEGRO, VERDE_O);
+    // print("$> ");
 
-    setCursorPos(getScreenHeight() - 1, 0);
-    printf(LINE_MESSAGE, NEGRO, VERDE_O);
-    print("$> ");
+    // while(readUserInput(userInput, USER_INPUT_MAX_SIZE)){
+    //     processInstruction(userInput);
+    //     printf(LINE_MESSAGE, NEGRO, VERDE_O);
+    //     print("$> ");
+    // }
 
-    while(readUserInput(userInput, USER_INPUT_MAX_SIZE)){
-        processInstruction(userInput);
-        printf(LINE_MESSAGE, NEGRO, VERDE_O);
-        print("$> ");
-    }
-
-    return 0;
+    // return 0;
 }
 
 static int readUserInput(char * userInput, int bufferSize){
@@ -84,14 +127,14 @@ static int readUserInput(char * userInput, int bufferSize){
 
 static void processInstruction(char * userInput){
 
-   for (int i = 0; i < functionCount; i++){
-        
-
-        // if(!strcmp( userInput, functionArray[i].functionName)){
-        //    functionArray[i].function();
-        //    return;
-        // 
+    for (int i = 0; i < functionCount; i++){
+        if(!strcmp( userInput, functionArray[i].functionName)){
+          // print("aca");
+           functionArray[i].function();
+           return;
+        }
     }
+        print("si");
 
     print("No existe la funcion ");
     println(userInput);
@@ -101,7 +144,6 @@ static void loadFunctions(){
     loadFunction( "inforeg", inforeg);
     loadFunction("clear", clear);
     loadFunction("clock",printTime);
-    loadFunction("arcanoid", arkanoid);
     loadFunction( "triggerException0", triggerException0);
     loadFunction( "triggerException6", triggerException6);
 }
@@ -132,12 +174,6 @@ static void loadFunction(char * functionName, int (*function)()){
         putChar('\n');
         return 0;
 
-    }
-
-    static int arkanoid(){
-        arcanoidSaveFile = startGame(arcanoidSaveFile);
-        usrClearScreen();
-        return 0;
     }
 
     static int inforeg(){
