@@ -25,7 +25,7 @@ void load_idt() {
     setup_IDT_entry (0x80, (uint64_t) &_syscallHandler);
 
 
-	picMasterMask(0xFF); //Abro IRQ0 y IRQ1 del PIC
+	picMasterMask(0xFC); //Abro IRQ0 y IRQ1 del PIC
 	picSlaveMask(0xFF);
 
   _sti();

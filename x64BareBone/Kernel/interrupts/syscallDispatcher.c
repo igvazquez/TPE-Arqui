@@ -8,6 +8,7 @@
 #include <videoDriver.h>
 #include <keyboardDriver.h>
 #include <interrupts.h>
+#include <soundDriver.h>
 
 int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx){
 	switch (rdi){
@@ -59,6 +60,10 @@ int syscallDispatcher(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx){
         //RBX   /  RSI : timeID : minutos hora o segundos
         case 8:
             return sysRTC(rsi); 
+        //SysCall 9: Hace un beep.
+        case 9:  
+            beep();
+            return 1;
     }
     return 0;
 }

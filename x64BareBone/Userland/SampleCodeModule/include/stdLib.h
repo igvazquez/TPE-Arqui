@@ -57,4 +57,6 @@ extern void triggerException6Asm();
 
 extern uint64_t getRegister(enum registers reg);
 
+extern void sysBeep();
+
 #endif

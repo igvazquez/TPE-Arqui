@@ -9,6 +9,7 @@ GLOBAL printAllRegisters
 GLOBAL drawPixel
 GLOBAL setCursorPos
 GLOBAL getCurrentTime
+GLOBAL sysBeep
 
 GLOBAL triggerException6Asm
 
@@ -93,7 +94,9 @@ setCursorPos:
 getCurrentTime:
     sysCaller 8
 ;SysCall 8: devuelve la hora, minutos o segundos del reloj
-
+sysBeep:
+    sysCaller 9
+;SysCall 9: Hace un beep.
 triggerException6Asm:
 	int 300h
 	ret
