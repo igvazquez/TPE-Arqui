@@ -10,3 +10,5 @@ settings.json
 .bash_history
 TPE.zip
 *.elf
+x64BareBone.zip
+x64BareBone/.gdb_history
